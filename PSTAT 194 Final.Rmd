@@ -2,18 +2,79 @@
 title: "PSTAT 194 Individual Final Messing Around"
 author: "Ayden Kelleher"
 date: "2026-03-04"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    theme: flatly
+    highlight: tango
+  pdf_document:
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Load and Prepare the Data
+
+## Load your chosen dataset into the course RStudio server and convert it to an ‘igraph’ object.
+
+We loaded the data in [Code Snippet 1](#snippet-1)
+
+
+## Consider what the vertices and edges represent in your network.
+
+## Identify basic network elements: vertices, edges, weights, directionality, etc
+
+# Generate Induced Subgraphs:
+
+## Create four induced subgraphs with 200 random nodes each from your dataset.
+
+# Visualize the Networks:
+
+## Use three different layouts from the igraph package to visualize each network.
+
+## Experiment with node and edge attributes to enhance visualizations.
+
+# Analyze Network Metrics:
+
+## Explore various network, node, and edge metrics.
+
+## Interpret these metrics in the context of your network.
+
+# Community Detection:
+
+## Run community detection algorithms.
+
+## Analyze and interpret the resulting communities
+
+# Adjacency Matrix:
+
+## Examine the adjacency matrix of your network.
+
+## Reorder vertices to highlight patterns.
+
+# Reorder Nodes:
+
+## Reorder nodes based on community or connected component.
+
+## Observe changes in the adjacency matrix and identify clearer patterns
+
+# Summarize Findings:
+
+## Prepare a presentation and a short write-up summarizing your analysis and findings.
+
+# Appendix
+
+## Snippet 1
+
 ```{r}
 #install.packages('igraph')
 library(igraph)
 
-edges_matrix <- as.matrix(read.csv("musae_squirrel_edges.csv"))
+edges_matrix <- as.matrix(read.csv("C:\\Users\\tayde\\OneDrive\\Documents\\PSTAT 194\\musae_squirrel_edges.csv"))
 
 edges_matrix[,1] <- factor(edges_matrix[,1]) # if we dont change this to factor, then there are too many id names idk. If you don't believe me comment this out :/
 
@@ -25,6 +86,8 @@ g <- graph_from_edgelist(edges_matrix, directed = FALSE)
 length(V(g)) #this is exactly what the help page says
 length(E(g)) #this is quite a few more edges than the help page says
 ```
+
+## Subgraph 1
 
 
 ```{r}
@@ -55,6 +118,36 @@ plot(
 ```
 
 ```{r}
+centers <- sample(V(g), 40)
+sampled_vertices <- c()
+
+for (v in centers) {
+  
+  neigh <- neighbors(g, v)
+  
+  if (length(neigh) > 5) {
+    neigh <- sample(neigh, 5)
+  }
+  
+  sampled_vertices <- c(sampled_vertices, v, neigh)
+}
+
+subg <- induced_subgraph(g, sampled_vertices)
+
+
+
+```
+
+
+## Plot 1
+
+```{r}
+plot(subg)
+```
+
+## Subgraph 2
+
+```{r}
 set.seed(10426)
 sub.network2 <- induced_subgraph(g, sample(V(g), 200))
 
@@ -64,6 +157,9 @@ plot(sub.network2,
   edge.width=2)
 ```
 
+## Plot 2
+
+## Subgraph 3
 
 ```{r}
 set.seed(10526)
@@ -74,6 +170,10 @@ plot(sub.network3,
   vertex.label.cex=.4,
   edge.width=2)
 ```
+
+## Plot 3
+
+## Subgraph 4
 
 ```{r}
 set.seed(10626)
@@ -87,6 +187,4 @@ plot(
 )
 ```
 
-
-
-
+## Plot 4
