@@ -26,7 +26,7 @@ We loaded the data in [Code Snippet 1](#snippet-1)
 
 ## Consider what the vertices and edges represent in your network.
 
-In our network, the vertices represent 
+In our network, the vertices represent wikipedia articles, and edges represent mutual links between them. Since we are using the musae squirrel network, our articles are about topics related to squirrels, and the edges are mutual links between them. 
 
 
 ## Identify basic network elements: vertices, edges, weights, directionality, etc
