@@ -366,6 +366,7 @@ sizes(com_l[[2]])
 sizes(com_l[[3]])
 sizes(com_l[[4]])
 ```
+
 ## And we visualize with community coloring, short eg
 
 ```{r}
