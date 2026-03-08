@@ -31,7 +31,7 @@ In our network, the vertices represent wikipedia articles, and edges represent m
 
 ## Identify basic network elements: vertices, edges, weights, directionality, etc
 
-Using code snippet 2, we can see that we have 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. 
+Using code [snippet 2](#snippet-2), we can see that we have 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. 
 
 # Generate Induced Subgraphs:
 
