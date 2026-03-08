@@ -31,6 +31,8 @@ In our network, the vertices represent wikipedia articles, and edges represent m
 
 ## Identify basic network elements: vertices, edges, weights, directionality, etc
 
+Using code snippet 2, we can see that we have 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. 
+
 # Generate Induced Subgraphs:
 
 ## Create four induced subgraphs with 200 random nodes each from your dataset.
@@ -89,6 +91,17 @@ g <- graph_from_edgelist(edges_matrix, directed = FALSE)
 length(V(g)) #this is exactly what the help page says
 length(E(g)) #this is quite a few more edges than the help page says
 ```
+
+## Snippet 2
+
+```{r}
+length(V(g))
+length(E(g))
+is_weighted(g)
+is_directed(g)
+summary(g)
+```
+
 
 ## First Attempt at creating a subgraph
 
