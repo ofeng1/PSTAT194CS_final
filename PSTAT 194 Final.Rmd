@@ -430,4 +430,3 @@ plot(subg4,
      edge.color = "gray80",
      edge.width = 0.5)
 ```
-
