@@ -324,14 +324,19 @@ plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.l
 ```
 
 
-# Adjacency Matrix
+# Adjacency Matrix & Reorder Nodes
 ```{r}
 library(Matrix)
 
 ord <- order(com_l[[1]]$membership)
 A <- as_adj(und_subg[[1]])
-image(Matrix(A[ord, ord]))
+image(Matrix(A[ord, ord]), main = "Subgraph 1 reordered by community")
+
+comp1 <- components(und_subg[[1]])
+ord_comp1 <- order(comp1$membership)
+image(Matrix(A[ord_comp1, ord_comp1]), main = "Subgraph 1 reordered by connected component")
 ```
+
 
 ## Analyzing Network Metrics (Degree)
 ```{r}
