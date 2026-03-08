@@ -256,21 +256,25 @@ plot(subg4,
 
 # Community Detection
 
+```{r}
 subg <- list(subg1 = subg1, 
              subg2 = subg2,
              subg3 = subg3,
              subg4 = subg4)
 
 und_subg <- lapply(subg, as.undirected)
+```
 
 ## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
-
+```{r}
 com_fg <- lapply(und_subg, cluster_fast_greedy)
 com_l <- lapply(und_subg, cluster_louvain)
 com_w <- lapply(und_subg, cluster_walktrap)
+```
 
 ## And then we compare modularity
 
+```{r}
 mod_fg <- sapply(com_fg, modularity)
 mod_l <- sapply(com_l, modularity)
 mod_w <- sapply(com_w, modularity)
@@ -292,30 +296,31 @@ fast_greedy = ncom_fg,
 louvain = ncom_l,
 walktrap = ncom_w
 )
-
+```
 ## And as it was recommended in our lecture to report community size, we do so as well here.
-
+```{r}
 sizes(com_l[[1]])
 sizes(com_l[[2]])
 sizes(com_l[[3]])
 sizes(com_l[[4]])
-
+```
 ## And we visualize with community coloring, short eg
 
+```{r}
 plot(com_l[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Louvain community in subgraph 1")
 plot(com_l[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Louvain community in subgraph 2")
 plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
-
+```
 
 # Adjacency Matrix
-
+```{r}
 library(Matrix)
 
 kc <- com_l[[1]]
 ord <- order(kc$membership)
 A <- as_adj(und_subg[[1]])
 image(Matrix(A[ord, ord]))
-
+```
 ## Analyzing Network Metrics (Degree)
 ```{r}
 # Degree of Nodes in Subgraph 1
