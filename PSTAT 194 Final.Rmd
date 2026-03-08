@@ -51,9 +51,15 @@ Using the basic plotting, we plotted using the default layouts.
 
 # Analyze Network Metrics:
 
-## Explore various network, node, and edge metrics.
+## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network.
 
-## Interpret these metrics in the context of your network.
+### Degree
+
+### Closeness
+
+### Betweenness
+
+### Eigen Metric
 
 # Community Detection:
 
