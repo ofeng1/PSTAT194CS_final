@@ -259,6 +259,54 @@ plot(subg4,
   vertex.label.cex=.4,
   edge.width=2)
 ```
+# Visualize the Networks:
+
+```{r}
+
+library(igraph)
+
+set.seed(444)
+
+graphs <- list(
+  subg1 = subg1,
+  
+  subg2 = subg2,
+  
+  subg3 = subg3,
+  subg4 = subg4
+)
+
+for (i in names(graphs)) {
+  
+  # 
+  simp_graph <- simplify(graphs[[i]])
+  #community detection for colors
+  cl <- cluster_louvain(as.undirected(simp_graph))
+  V(simp_graph)$color <- membership(cl)
+  
+  
+  #adjust size to match degree level
+  V(simp_graph)$size  <- 3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))
+  
+  #remove labels
+  V(simp_graph)$label <- NA
+  
+  #make lines between nodes cleaner
+  E(simp_graph)$color <- adjustcolor("gray50", alpha.f = 0.2)
+
+
+  plot(simp_graph, layout = layout_with_fr, main = paste(i, "FR"))
+  
+  plot(simp_graph, layout = layout_with_kk,  main = paste(i, "KK"))
+  
+  
+  plot(simp_graph, layout = layout_nicely,  main = paste(i, "Nicely"))
+
+
+}
+
+
+```
 
 # Community Detection
 
@@ -270,6 +318,9 @@ subg <- list(subg1 = subg1,
 
 und_subg <- lapply(subg, as.undirected)
 ```
+
+
+
 
 ## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
 
