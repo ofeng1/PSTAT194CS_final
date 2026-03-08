@@ -47,6 +47,8 @@ Using the basic plotting, we plotted using the default layouts.
 
 ## Use three different layouts from the igraph package to visualize each network.
 
+For our visualizations, we chost
+
 ## Experiment with node and edge attributes to enhance visualizations.
 
 # Analyze Network Metrics:
@@ -259,6 +261,7 @@ plot(subg4,
   vertex.label.cex=.4,
   edge.width=2)
 ```
+
 # Visualize the Networks:
 
 ```{r Visualize, cache = TRUE}
