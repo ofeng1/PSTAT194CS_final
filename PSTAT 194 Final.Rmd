@@ -272,6 +272,11 @@ und_subg <- lapply(subg, as.undirected)
 ```
 
 ## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
+
+```{r}
+und_subg <- lapply(subg, function(x) simplify(as_undirected(x)))
+```
+
 ```{r}
 com_fg <- lapply(und_subg, cluster_fast_greedy)
 com_l <- lapply(und_subg, cluster_louvain)
@@ -317,6 +322,7 @@ plot(com_l[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.l
 plot(com_l[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Louvain community in subgraph 2")
 plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
 ```
+
 
 # Adjacency Matrix
 ```{r}
