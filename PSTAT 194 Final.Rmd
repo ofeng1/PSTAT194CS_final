@@ -322,8 +322,7 @@ plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.l
 ```{r}
 library(Matrix)
 
-kc <- com_l[[1]]
-ord <- order(kc$membership)
+ord <- order(com_l[[1]]$membership)
 A <- as_adj(und_subg[[1]])
 image(Matrix(A[ord, ord]))
 ```
@@ -432,4 +431,3 @@ plot(subg4,
      edge.width = 0.5)
 ```
 
-# Test
