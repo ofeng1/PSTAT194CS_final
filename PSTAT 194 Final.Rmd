@@ -261,52 +261,6 @@ plot(subg4,
 ```
 
 # Community Detection
-```{r}
-
-library(igraph)
-
-set.seed(444)
-
-graphs <- list(
-  subg1 = subg1,
-  
-  subg2 = subg2,
-  
-  subg3 = subg3,
-  subg4 = subg4
-)
-
-for (i in names(graphs)) {
-  
-  # 
-  simp_graph <- simplify(graphs[[i]])
-  #community detection for colors
-  cl <- cluster_louvain(as.undirected(simp_graph))
-  V(simp_graph)$color <- membership(cl)
-  
-  
-  #adjust size to match degree level
-  V(simp_graph)$size  <- 3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))
-  
-  #remove labels
-  V(simp_graph)$label <- NA
-  
-  #make lines between nodes cleaner
-  E(simp_graph)$color <- adjustcolor("gray50", alpha.f = 0.2)
-
-
-  plot(simp_graph, layout = layout_with_fr, main = paste(i, "FR"))
-  
-  plot(simp_graph, layout = layout_with_kk,  main = paste(i, "KK"))
-  
-  
-  plot(simp_graph, layout = layout_nicely,  main = paste(i, "Nicely"))
-
-
-}
-
-
-```
 
 ```{r}
 subg <- list(subg1 = subg1, 
@@ -483,4 +437,22 @@ plot(subg4,
      edge.width = 0.5)
 ```
 
+## Analyzing Network Metrics (EigenCentrality)
+```{r}
+print("Eigen Centrality SubGraph 1", quote=FALSE)
+eig_subg1 <- eigen_centrality(subg1)$vector
+head(eig_subg1)
+
+print("Eigen Centrality SubGraph 2", quote=FALSE)
+eig_subg2 <- eigen_centrality(subg2)$vector
+head(eig_subg2)
+
+print("Eigen Centrality SubGraph 3", quote=FALSE)
+eig_subg3 <- eigen_centrality(subg3)$vector
+head(eig_subg3)
+
+print("Eigen Centrality SubGraph 4", quote=FALSE)
+eig_subg4 <- eigen_centrality(subg4)$vector
+head(eig_subg4)
+```
 
