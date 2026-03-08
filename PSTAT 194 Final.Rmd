@@ -47,7 +47,15 @@ Using the basic plotting, we plotted using the default layouts.
 
 ## Use three different layouts from the igraph package to visualize each network.
 
+For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold layout, the Kamada-Kawai layout, and the layout nicely, where the plots can be found [here](#visualize-the-networks:). 
+
 ## Experiment with node and edge attributes to enhance visualizations.
+
+To enhance out visualizations, we chose to do a few different things
+  - adjust the node size by the following function of degree `3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))`
+  - color in nodes based on louvain communities to make the groupings more obvious
+  - remove the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read.
+  - Make the lines between the nodes more see through so they take up less of the visual space.
 
 # Analyze Network Metrics:
 
