@@ -84,6 +84,8 @@ Using the basic plotting, we plotted using the default layouts.
 ```{r}
 #install.packages('igraph')
 library(igraph)
+#install.packages('tidygraph')
+library(tidygraph)
 
 edges_matrix <- as.matrix(read.csv("musae_squirrel_edges.csv"))
 
