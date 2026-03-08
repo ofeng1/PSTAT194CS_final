@@ -259,54 +259,6 @@ plot(subg4,
   vertex.label.cex=.4,
   edge.width=2)
 ```
-# Visualize the Networks:
-
-```{r}
-
-library(igraph)
-
-set.seed(444)
-
-graphs <- list(
-  subg1 = subg1,
-  
-  subg2 = subg2,
-  
-  subg3 = subg3,
-  subg4 = subg4
-)
-
-for (i in names(graphs)) {
-  
-  # 
-  simp_graph <- simplify(graphs[[i]])
-  #community detection for colors
-  cl <- cluster_louvain(as.undirected(simp_graph))
-  V(simp_graph)$color <- membership(cl)
-  
-  
-  #adjust size to match degree level
-  V(simp_graph)$size  <- 3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))
-  
-  #remove labels
-  V(simp_graph)$label <- NA
-  
-  #make lines between nodes cleaner
-  E(simp_graph)$color <- adjustcolor("gray50", alpha.f = 0.2)
-
-
-  plot(simp_graph, layout = layout_with_fr, main = paste(i, "FR"))
-  
-  plot(simp_graph, layout = layout_with_kk,  main = paste(i, "KK"))
-  
-  
-  plot(simp_graph, layout = layout_nicely,  main = paste(i, "Nicely"))
-
-
-}
-
-
-```
 
 # Community Detection
 
@@ -318,9 +270,6 @@ subg <- list(subg1 = subg1,
 
 und_subg <- lapply(subg, as.undirected)
 ```
-
-
-
 
 ## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
 
@@ -374,32 +323,15 @@ plot(com_l[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.l
 plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
 ```
 
-```{r}
-plot(com_fg[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Fast Greedy community in subgraph 1")
-plot(com_fg[[1]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Fast Greedy community in subgraph 2")
-plot(com_fg[[1]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Fast Greedy community in subgraph 3")
-```
 
-```{r}
-plot(com_w[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Louvain community in subgraph 1")
-plot(com_w[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Louvain community in subgraph 2")
-plot(com_w[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
-```
-
-
-# Adjacency Matrix & Reorder Nodes
+# Adjacency Matrix
 ```{r}
 library(Matrix)
 
 ord <- order(com_l[[1]]$membership)
 A <- as_adj(und_subg[[1]])
-image(Matrix(A[ord, ord]), main = "Subgraph 1 reordered by community")
-
-comp1 <- components(und_subg[[1]])
-ord_comp1 <- order(comp1$membership)
-image(Matrix(A[ord_comp1, ord_comp1]), main = "Subgraph 1 reordered by connected component")
+image(Matrix(A[ord, ord]))
 ```
-
 
 ## Analyzing Network Metrics (Degree)
 ```{r}
@@ -478,4 +410,32 @@ plot(subg3,
      edge.color = "gray80",
      edge.width = 0.5)
 ```
+
+```{r}
+# Degree of Nodes in Subgraph 4
+degree <- degree(subg4, mode="all")
+
+# Degree Histogram
+hist(degree,
+     breaks=50, 
+     main="Degree histogram") 
+
+# Network Plot
+sort(degree, decreasing = T, index.return = T)
+V(subg4)$color <- "white"
+V(subg4)$label.color <- "black"
+V(subg4)$frame.color <- "black"
+
+V(subg4)$color[V(subg4)[c(29,37,77,62,52)]] <- "#F0DC16"
+
+plot(subg4,
+     layout = layout_with_kk(subg4),
+     vertex.size = log(degree + 1) * 3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
+
+
 
