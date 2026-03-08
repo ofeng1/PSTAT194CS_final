@@ -26,6 +26,8 @@ We loaded the data in [Code Snippet 1](#snippet-1)
 
 ## Consider what the vertices and edges represent in your network.
 
+In our network, the vertices represent 
+
 
 ## Identify basic network elements: vertices, edges, weights, directionality, etc
 
@@ -75,7 +77,7 @@ We loaded the data in [Code Snippet 1](#snippet-1)
 #install.packages('igraph')
 library(igraph)
 
-edges_matrix <- as.matrix(read.csv("C:\\Users\\tayde\\OneDrive\\Documents\\PSTAT 194\\musae_squirrel_edges.csv"))
+edges_matrix <- as.matrix(read.csv("musae_squirrel_edges.csv"))
 
 edges_matrix[,1] <- factor(edges_matrix[,1]) # if we dont change this to factor, then there are too many id names idk. If you don't believe me comment this out :/
 
