@@ -382,6 +382,14 @@ sizes(com_l[[4]])
 plot(com_l[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Louvain community in subgraph 1")
 plot(com_l[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Louvain community in subgraph 2")
 plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
+
+plot(com_fg[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Fast Greedy community in subgraph 1")
+plot(com_fg[[1]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Fast Greedy community in subgraph 2")
+plot(com_fg[[1]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Fast Greedy community in subgraph 3")
+
+plot(com_w[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Walktrap community in subgraph 1")
+plot(com_w[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Walktrap community in subgraph 2")
+plot(com_w[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Walktrap community in subgraph 3")
 ```
 
 
