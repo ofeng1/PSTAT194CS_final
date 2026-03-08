@@ -321,6 +321,7 @@ ord <- order(kc$membership)
 A <- as_adj(und_subg[[1]])
 image(Matrix(A[ord, ord]))
 ```
+
 ## Analyzing Network Metrics (Degree)
 ```{r}
 # Degree of Nodes in Subgraph 1

@@ -37,7 +37,7 @@ Using code [snippet 2](#snippet-2), we can see that we have 5201 nodes, 217073 e
 
 ## Create four induced subgraphs with 200 random nodes each from your dataset.
 
-To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, we ran into the issue that much of our graph had degree zero, with 79 out of 200 nodes being nonconnected to any other node, in contrast to our entire graph g have no points that are of degree zero. Thus any random sample would lose some structure. 
+To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, we ran into the issue that much of our graph had degree zero, with 79 out of 200 nodes being unconnected to any other node, in contrast to our entire graph g have no points that are of degree zero. Thus any random sample would lose some structure. 
 
 To get around this, what we did instead was to draw a sample of 40 different nodes. Then we took a sample of 5 different neighbors of the nodes, or all of the neighbors if they had less than 5 total neighbors. Then we take 200 of those nodes, and put it in a subgraph. This subgraph is a biased subgraph, but it preserves some of the structure of the graph. We did this in each of the subgraphs, which can be seen in [subgraph 1](subgraph-1), [subgraph 2](subgraph-2), [subgraph 3](subgraph-3), and [subgraph 4](subgraph-4)
 
@@ -254,3 +254,174 @@ plot(subg4,
   edge.width=2)
 ```
 
+# Community Detection
+
+```{r}
+subg <- list(subg1 = subg1, 
+             subg2 = subg2,
+             subg3 = subg3,
+             subg4 = subg4)
+
+und_subg <- lapply(subg, as.undirected)
+```
+
+## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
+```{r}
+com_fg <- lapply(und_subg, cluster_fast_greedy)
+com_l <- lapply(und_subg, cluster_louvain)
+com_w <- lapply(und_subg, cluster_walktrap)
+```
+
+## And then we compare modularity
+
+```{r}
+mod_fg <- sapply(com_fg, modularity)
+mod_l <- sapply(com_l, modularity)
+mod_w <- sapply(com_w, modularity)
+
+data.frame(
+subgraph = names(subg),
+fast_greedy = mod_fg, 
+louvain = mod_l,
+walktrap = mod_w
+)
+
+ncom_fg <- sapply(com_fg, length)
+ncom_l <- sapply(com_l, length)
+ncom_w <- sapply(com_w, length)
+
+data.frame(
+subgraph = names(subg),
+fast_greedy = ncom_fg, 
+louvain = ncom_l,
+walktrap = ncom_w
+)
+```
+## And as it was recommended in our lecture to report community size, we do so as well here.
+```{r}
+sizes(com_l[[1]])
+sizes(com_l[[2]])
+sizes(com_l[[3]])
+sizes(com_l[[4]])
+```
+## And we visualize with community coloring, short eg
+
+```{r}
+plot(com_l[[1]], und_subg[[1]], layout = layout_with_fr(und_subg[[1]]), vertex.label = NA, main = "Louvain community in subgraph 1")
+plot(com_l[[2]], und_subg[[2]], layout = layout_with_fr(und_subg[[2]]), vertex.label = NA, main = "Louvain community in subgraph 2")
+plot(com_l[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.label = NA, main = "Louvain community in subgraph 3")
+```
+
+# Adjacency Matrix
+```{r}
+library(Matrix)
+
+kc <- com_l[[1]]
+ord <- order(kc$membership)
+A <- as_adj(und_subg[[1]])
+image(Matrix(A[ord, ord]))
+```
+
+## Analyzing Network Metrics (Degree)
+```{r}
+# Degree of Nodes in Subgraph 1
+degree <- degree(subg1, mode="all")
+
+# Degree Histogram
+hist(degree,
+     breaks=50, 
+     main="Degree histogram") 
+
+# Network Plot
+sort(degree, decreasing = T, index.return = T)
+V(subg1)$color <- "white"
+V(subg1)$label.color <- "black"
+V(subg1)$frame.color <- "black"
+
+V(subg1)$color[V(subg1)[c(29,37,77,62,52)]] <- "#F0DC16"
+
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = log(degree + 1) * 3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
+```{r}
+# Degree of Nodes in Subgraph 2
+degree <- degree(subg2, mode="all")
+
+# Degree Histogram
+hist(degree,
+     breaks=50, 
+     main="Degree histogram") 
+
+# Network Plot
+sort(degree, decreasing = T, index.return = T)
+V(subg2)$color <- "white"
+V(subg2)$label.color <- "black"
+V(subg2)$frame.color <- "black"
+
+V(subg2)$color[V(subg2)[c(29,37,77,62,52)]] <- "#F0DC16"
+
+plot(subg2,
+     layout = layout_with_kk(subg2),
+     vertex.size = log(degree + 1) * 3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
+
+```{r}
+# Degree of Nodes in Subgraph 3
+degree <- degree(subg3, mode="all")
+
+# Degree Histogram
+hist(degree,
+     breaks=50, 
+     main="Degree histogram") 
+
+# Network Plot
+sort(degree, decreasing = T, index.return = T)
+V(subg3)$color <- "white"
+V(subg3)$label.color <- "black"
+V(subg3)$frame.color <- "black"
+
+V(subg3)$color[V(subg3)[c(29,37,77,62,52)]] <- "#F0DC16"
+
+plot(subg3,
+     layout = layout_with_kk(subg3),
+     vertex.size = log(degree + 1) * 3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
+
+```{r}
+# Degree of Nodes in Subgraph 4
+degree <- degree(subg4, mode="all")
+
+# Degree Histogram
+hist(degree,
+     breaks=50, 
+     main="Degree histogram") 
+
+# Network Plot
+sort(degree, decreasing = T, index.return = T)
+V(subg4)$color <- "white"
+V(subg4)$label.color <- "black"
+V(subg4)$frame.color <- "black"
+
+V(subg4)$color[V(subg4)[c(29,37,77,62,52)]] <- "#F0DC16"
+
+plot(subg4,
+     layout = layout_with_kk(subg4),
+     vertex.size = log(degree + 1) * 3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
