@@ -137,7 +137,7 @@ for (v in centers) {
   sampled_vertices <- c(sampled_vertices, v, neigh)
 }
 
-subg1 <- induced_subgraph(g, sampled_vertices[1:200])
+subg1 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
 
@@ -168,7 +168,7 @@ for (v in centers) {
   sampled_vertices <- c(sampled_vertices, v, neigh)
 }
 
-subg2 <- induced_subgraph(g, sampled_vertices)
+subg2 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
 ## Plot 2
@@ -199,7 +199,7 @@ for (v in centers) {
   sampled_vertices <- c(sampled_vertices, v, neigh)
 }
 
-subg3 <- induced_subgraph(g, sampled_vertices)
+subg3 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
 ## Plot 3
@@ -231,7 +231,7 @@ for (v in centers) {
   sampled_vertices <- c(sampled_vertices, v, neigh)
 }
 
-subg4 <- induced_subgraph(g, sampled_vertices)
+subg4 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
 ## Plot 4
