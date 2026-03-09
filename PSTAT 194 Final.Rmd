@@ -140,7 +140,9 @@ summary(g)
 ```
 
 
-## First Attempt at creating a subgraph
+## Creating Subgraphs
+
+### First Attempt at creating a subgraph
 
 [back to report](#generate-induced-subgraphs)
 
@@ -158,7 +160,7 @@ sum(degree(g)==0)
 ```
 
 
-## Subgraph 1
+### Subgraph 1
 
 [back to report](#generate-induced-subgraphs)
 
@@ -183,7 +185,7 @@ subg1 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
 
-## Plot 1
+### Plot 1
 
 ```{r}
 plot(subg1,
@@ -192,7 +194,7 @@ plot(subg1,
   edge.width=2)
 ```
 
-## Subgraph 2
+### Subgraph 2
 
 [back to report](#generate-induced-subgraphs)
 
@@ -215,7 +217,7 @@ for (v in centers) {
 subg2 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
-## Plot 2
+### Plot 2
 
 ```{r}
 plot(subg2,
@@ -225,7 +227,7 @@ plot(subg2,
 ```
 
 
-## Subgraph 3
+### Subgraph 3
 
 [back to report](#generate-induced-subgraphs)
 
@@ -248,7 +250,7 @@ for (v in centers) {
 subg3 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
-## Plot 3
+### Plot 3
 
 ```{r}
 
@@ -259,7 +261,7 @@ plot(subg3,
 ```
 
 
-## Subgraph 4
+### Subgraph 4
 
 [back to report](#generate-induced-subgraphs)
 
@@ -282,7 +284,7 @@ for (v in centers) {
 subg4 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ```
 
-## Plot 4
+### Plot 4
 
 ```{r}
 plot(subg4,
@@ -291,7 +293,7 @@ plot(subg4,
   edge.width=2)
 ```
 
-# Three Different Visualizations
+## Three Different Visualizations
 
 [back to report](#visualize-the-networks)
 
@@ -343,7 +345,7 @@ for (i in names(graphs)) {
 ```
 
 
-# Community Detection
+## Community Detection
 
 [back to report](#community-detection)
 
@@ -356,7 +358,7 @@ subg <- list(subg1 = subg1,
 und_subg <- lapply(subg, as.undirected)
 ```
 
-## We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
+### We choose Fast Greedy, Louvain, and Walktrap (top three methods on our lecture slide and covered in ica) to perform our community detection.
 
 [back to report](#run-community-detection-algorithms)
 
@@ -370,7 +372,7 @@ com_l <- lapply(und_subg, cluster_louvain)
 com_w <- lapply(und_subg, cluster_walktrap)
 ```
 
-## And then we compare modularity
+### And then we compare modularity
 
 [back to report](#analyze-and-interpret-the-resulting-communities)
 
@@ -398,7 +400,7 @@ walktrap = ncom_w
 )
 ```
 
-## And as it was recommended in our lecture to report community size, we do so as well here.
+### And as it was recommended in our lecture to report community size, we do so as well here.
 
 [back to report](#analyze-and-interpret-the-resulting-communities)
 
@@ -409,7 +411,7 @@ sizes(com_l[[3]])
 sizes(com_l[[4]])
 ```
 
-## And we visualize with community coloring, short eg
+### And we visualize with community coloring, short eg
 
 [back to report](#analyze-and-interpret-the-resulting-communities)
 
@@ -428,7 +430,7 @@ plot(com_w[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.l
 ```
 
 
-# Adjacency Matrix
+## Adjacency Matrix
 
 [back to report](#adjacency-matrix)
 
