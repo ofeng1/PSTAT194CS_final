@@ -74,6 +74,10 @@ When we look at the individual subgraphs, we can see a similar pattern. Each sub
 
 ### Eigen Metric
 
+The eigen centrality metric is a measure of centrality that, according to the documentation, states "eigenvector centrality scores correspond to the values of the principal eigenvector of the graph's adjacency matrix; these scores may, in turn, be interpreted as arising from a reciprocal process in which the centrality of each actor is proportional to the sum of the centralities of those actors to whom he or she is connected. In general, vertices with high eigenvector centralities are those which are connected to many other vertices which are, in turn, connected to many others (and so on)" from [here](https://r.igraph.org/reference/eigen_centrality.html). The thing to keep in mind is that the score gets bigger when a node is connected to more nodes, and these nodes are connected to more nodes, and so on. 
+
+Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we can see that
+
 # Community Detection:
 
 ## Run community detection algorithms.
@@ -520,6 +524,8 @@ plot(subg4,
 ```
 
 ## Analyzing Network Metrics (EigenCentrality)
+
+[back to report](#eigen-metric)
 
 ```{r EigenCentrality, cache=TRUE}
 print("Eigen Centrality SubGraph 1", quote=FALSE)
