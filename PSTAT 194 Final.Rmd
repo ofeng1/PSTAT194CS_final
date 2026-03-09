@@ -520,23 +520,49 @@ plot(subg4,
 ```
 
 ## Analyzing Network Metrics (EigenCentrality)
-```{r}
+
+```{r EigenCentrality, cache=TRUE}
 print("Eigen Centrality SubGraph 1", quote=FALSE)
 eig_subg1 <- eigen_centrality(subg1)$vector
 head(eig_subg1)
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = 15*sqrt(sqrt(eig_subg1)),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
 
 print("Eigen Centrality SubGraph 2", quote=FALSE)
 eig_subg2 <- eigen_centrality(subg2)$vector
 head(eig_subg2)
+plot(subg2,
+     layout = layout_with_kk(subg2),
+     vertex.size = 15*sqrt(sqrt(eig_subg2)),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
 
 print("Eigen Centrality SubGraph 3", quote=FALSE)
 eig_subg3 <- eigen_centrality(subg3)$vector
 head(eig_subg3)
+plot(subg3,
+     layout = layout_with_kk(subg3),
+     vertex.size = 15*sqrt(sqrt(eig_subg3)),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
 
 print("Eigen Centrality SubGraph 4", quote=FALSE)
 eig_subg4 <- eigen_centrality(subg4)$vector
 head(eig_subg4)
+plot(subg4,
+     layout = layout_with_kk(subg4),
+     vertex.size = 15*sqrt(sqrt(eig_subg4)),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
 ```
-
-
-
