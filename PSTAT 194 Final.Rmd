@@ -52,6 +52,7 @@ For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold l
 ## Experiment with node and edge attributes to enhance visualizations.
 
 To enhance out visualizations, we chose to do a few different things
+
   - adjust the node size by the following function of degree `3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))`
   - color in nodes based on louvain communities to make the groupings more obvious
   - remove the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read.
@@ -62,6 +63,10 @@ To enhance out visualizations, we chose to do a few different things
 ## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network.
 
 ### Degree
+
+The degree of a node is the measure of amount of edges connecting to a node. For directed graphs, we can have in and out degree, but our graph is undirected, so we don't need to worry about that. The first thing we will do is to look at the [histogram of degree](#analyzing-network-metrics-degree) of the entire network. Here we can see that the distribution is heavily skewed to the right, with a giant peak at $[0,100]$. 
+
+When we look at the individual subgraphs, we can see a similar pattern. Each subgraph is skewed to the right. The most connected nodes have a bit less than 100 nodes, which is a little less than half the network. This tracks with the most connected nodes in the full network being connected to about half of the other nodes. One interesting pattern that was not expected is that for each of the subgraphs, there is a smaller peak at $[30,50]$. That is to say for each of the subgraphs degree distribution, there was a peak at zero, it decreased reaching a low at around $20$, then hit a second peak somewhere in $[30,50]$. We wonder if this is a result of a true pattern in the data, or if it is an artifact from the way we sampled. Recall we randomly sampled 40 nodes, then sampled neighbors of those nodes. Since nodes of a higher degree are connected to more nodes, they are more likely to appear when we sample neighbors of the nodes, so it is reasonable to infer this is a result of the way we sampled our data. 
 
 ### Closeness
 
@@ -404,6 +409,12 @@ image(Matrix(A[ord, ord]))
 ```
 
 ## Analyzing Network Metrics (Degree)
+
+[back to report](#degree)
+
+```{r}
+hist(degree(g))
+```
 
 ```{r}
 # Degree of Nodes in Subgraph 1
