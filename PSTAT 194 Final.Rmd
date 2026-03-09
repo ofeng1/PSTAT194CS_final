@@ -489,6 +489,14 @@ image(Matrix(A))
 ord <- order(com_l[[1]]$membership)
 A <- as_adj(und_subg[[1]])
 image(Matrix(A[ord, ord]))
+
+ord <- order(com_fg[[1]]$membership)
+A <- as_adj(und_subg[[1]])
+image(Matrix(A[ord, ord]), main="subg1 adj matrix, fast greedy communities")
+
+ord <- order(com_w[[1]]$membership)
+A <- as_adj(und_subg[[1]])
+image(Matrix(A[ord, ord]), main="subg1 adj matrix, walktrap communities")
 ```
 
 ## Analyzing Network Metrics (Degree)
