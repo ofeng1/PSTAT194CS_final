@@ -102,9 +102,20 @@ $$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walkt
 4& 0.2772735 &0.3141144 &0.08605815
 \end{array}$$
 
-In class, we learned that modularity over $.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 had any communities with modularity at least this high. However, subgraphs 1 and 3 still had modularity $.246$ and $.202$ respectively most modular community structrues, which isn't that much smaller than $.3$. 
+In class, we learned that modularity over $.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 had any communities with modularity at least this high. However, subgraphs 1 and 3 still had modularity $.246$ and $.202$ respectively most modular community structrues, which isn't that much smaller than $.3$. This suggests that our network has a weak community structure. 
 
-This suggests that our network has a weak community structure. 
+Looking at the number of individual communities for each subgraph, we can see the following. 
+
+$$\begin{array}
+& \text{subgraph #}& \text{fast greedy}& \text{louvain}& \text{walktrap} \\
+1 &6       &5       &31 \\
+2 &6       &6       &27 \\
+3 &4       &7       &27 \\
+4 &6       &5       &20
+\end{array}$$
+
+This gives us the biggest differences between the different community finding algorithms. We can see that both the fast greedy and the louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the walktrap has many isolated nodes that count as their own communities. 
+
 
 # Adjacency Matrix:
 
