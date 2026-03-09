@@ -1884,16 +1884,30 @@ community.</p>
 <div id="examine-the-adjacency-matrix-of-your-network." class="section level2">
 <h2>Examine the adjacency matrix of your network.</h2>
 <p>Looking at the <a href="#unordered-adjacency-matrix">unordered
-adjacency matrix</a>, we can see very little pattern. The most of a
-pattern I can see is that there a few horizontal lines, representing the
-nodes that are most connected, and a few blocks, representing multiple
-nodes connected to similar nodes. This is expected since our nodes have
-not been ordered yet.</p>
+adjacency matrix</a> for subgraph 1 using the louvain method, we can see
+very little pattern. The most of a pattern I can see is that there a few
+horizontal lines, representing the nodes that are most connected, and a
+few blocks, representing multiple nodes connected to similar nodes. This
+is expected since our nodes have not been ordered yet.</p>
 </div>
 <div id="reorder-vertices-to-highlight-patterns." class="section level2">
 <h2>Reorder vertices to highlight patterns.</h2>
 <p>After <a href="#ordered-adjacency-matrix">reordering our nodes</a>,
-we can see a clearer pattern. We are using the</p>
+we can see a clearer pattern. There are 5 squares, filled in by varying
+amounts, on the diagnol. This matches the number of communities subgraph
+1 has according to the louvain method, which confirms our observation of
+5 squares. Some observations we made were that</p>
+<ul>
+<li>The first square is much more filled in than any of the other
+squares.</li>
+<li>We can see many horizontal/vertical lines, especially the areas
+overlapping with the nodes of the first community. This shows that the
+first community has a higher average degree than the other
+communities.</li>
+<li>The other 4 communities have a much lower degree on average, and are
+much less connected among themselves, and have lots of empty space in
+their squares. This shows that our subgraph is quite sparse.</li>
+</ul>
 </div>
 </div>
 <div id="reorder-nodes" class="section level1">
@@ -1961,7 +1975,7 @@ to report</a></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">is_directed</span>(g)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
-<pre><code>## IGRAPH 5745936 U--- 5201 217073 --</code></pre>
+<pre><code>## IGRAPH 214abcf U--- 5201 217073 --</code></pre>
 </div>
 <div id="creating-subgraphs" class="section level2">
 <h2>Creating Subgraphs</h2>

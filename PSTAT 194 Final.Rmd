@@ -121,11 +121,15 @@ This gives us the biggest differences between the different community finding al
 
 ## Examine the adjacency matrix of your network.
 
-Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix), we can see very little pattern. The most of a pattern I can see is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This is expected since our nodes have not been ordered yet.
+Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the louvain method, we can see very little pattern. The most of a pattern I can see is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This is expected since our nodes have not been ordered yet.
 
 ## Reorder vertices to highlight patterns.
 
-After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. We are using the 
+After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. There are 5 squares, filled in by varying amounts, on the diagnol. This matches the number of communities subgraph 1 has according to the louvain method, which confirms our observation of 5 squares. Some observations we made were that 
+
+- The first square is much more filled in than any of the other squares. 
+- We can see many horizontal/vertical lines, especially the areas overlapping with the nodes of the first community. This shows that the first community has a higher average degree than the other communities. 
+- The other 4 communities have a much lower degree on average, and are much less connected among themselves, and have lots of empty space in their squares. This shows that our subgraph is quite sparse. 
 
 # Reorder Nodes:
 
