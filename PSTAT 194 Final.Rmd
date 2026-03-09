@@ -114,14 +114,18 @@ $$\begin{array}
 4 &6       &5       &20
 \end{array}$$
 
-This gives us the biggest differences between the different community finding algorithms. We can see that both the fast greedy and the louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the walktrap has many isolated nodes that count as their own communities. 
+This gives us the biggest differences between the different community finding algorithms. We can see that both the fast greedy and the louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the walktrap has many isolated nodes that count as their own communities. This tells us if a node is relatively disconnected from the rest of the network, the walktrap will have a hard time placing it in a larger community. 
 
 
 # Adjacency Matrix:
 
 ## Examine the adjacency matrix of your network.
 
+Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix), we can see very little pattern. The most of a pattern I can see is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This is expected since our nodes have not been ordered yet.
+
 ## Reorder vertices to highlight patterns.
+
+After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. We are using the 
 
 # Reorder Nodes:
 
@@ -465,8 +469,20 @@ plot(com_w[[3]], und_subg[[3]], layout = layout_with_fr(und_subg[[3]]), vertex.l
 
 [back to report](#adjacency-matrix)
 
+### Unordered Adjacency Matrix
+
 ```{r}
 library(Matrix)
+
+non_ord <- com_l[[1]]$membership
+A <- as_adj(und_subg[[1]])
+image(Matrix(A))
+```
+
+### Ordered Adjacency Matrix
+
+```{r}
+#library(Matrix)
 
 ord <- order(com_l[[1]]$membership)
 A <- as_adj(und_subg[[1]])
