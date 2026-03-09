@@ -78,7 +78,7 @@ The eigen centrality metric is a measure of centrality that, according to the do
 
 Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we will start with the histograms. We can see that eigen centrality is distributed on $[0,1]$, where 1 is more connected. Looking at our subgraphs, we see the mode is at $[0,.1]$, with a second, much smaller, peak at about $[.4,.5]$. Comparing these to our degree distributions, we can see their shape is similar, with a main peak at 0, and a second smaller peak towards the middle of the data, which makes sense because both these node metrics are correlated. To show how this data looks when plotting the whole network, we cannot use the raw eigen metric because our nodes are too small, so we will use a transformation of the data. To give the reader an idea what this transformation does, we also plotted the histogram of the transformed data for the first subgraph.
 
-Looking at the actual plots, we can see there there are a bunch of central nodes that are grouped together, and then there are some less connected peripheral nodes, that are very small. This is most prominant on subgraph 3. This shows eigen centrality is a good measure of centrality.
+Looking at the actual plots, we can see there there are a bunch of central nodes that are grouped together, and then there are some less connected peripheral nodes, that are very small. This is most prominent on subgraph 3. This shows eigen centrality is a good measure of centrality.
 
 # Community Detection:
 
