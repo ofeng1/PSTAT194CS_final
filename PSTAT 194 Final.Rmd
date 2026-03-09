@@ -84,7 +84,27 @@ Looking at the actual plots, we can see there there are a bunch of central nodes
 
 ## Run community detection algorithms
 
+We chose to run [three different community detection algorithms](#we-choose-fast-greedy-louvain-and-walktrap-top-three-methods-on-our-lecture-slide-and-covered-in-ica-to-perform-our-community-detection.), fast greedy, louvain, and walktrap. 
+
+The way fast greedy works is by first declaring each node its own community, then it combines nodes greedily, that is to say maximizing the increase in modularity for each step, and stops when it can no longer increase the modularity. One thing to look out for is when working with larger networks, it can fail to find smaller communities .
+
+The way the louvain community detection works is by declaring each node its own community, then moves nodes into the community that increases the modularity the most, and then collapses the communities into super nodes. 
+The way walktrap works is by starting a random walk in to run short random walks. The idea is that nodes in the same community will appear more on these short random walks. 
+
 ## Analyze and interpret the resulting communities
+
+Comparing the results from the algorithms was interesting. Starting with the [modularity of our subgraphs](#and-then-we-compare-modularity), none of the graphs had very large modularity. Below is the results
+
+$$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walktrap} \\
+ 1& 0.1911257 &0.2461304 &0.15813260 \\
+2& 0.3522581 &0.3608913 &0.29551518 \\
+3& 0.1545764 &0.2025717 &0.10072104 \\
+4& 0.2772735 &0.3141144 &0.08605815
+\end{array}$$
+
+In class, we learned that modularity over $.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 had any communities with modularity at least this high. However, subgraphs 1 and 3 still had modularity $.246$ and $.202$ respectively most modular community structrues, which isn't that much smaller than $.3$. 
+
+This suggests that our network has a weak community structure. 
 
 # Adjacency Matrix:
 

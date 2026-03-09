@@ -1821,9 +1821,41 @@ centrality.</p>
 <h1>Community Detection:</h1>
 <div id="run-community-detection-algorithms" class="section level2">
 <h2>Run community detection algorithms</h2>
+<p>We chose to run <a href="#we-choose-fast-greedy-louvain-and-walktrap-top-three-methods-on-our-lecture-slide-and-covered-in-ica-to-perform-our-community-detection.">three
+different community detection algorithms</a>, fast greedy, louvain, and
+walktrap.</p>
+<p>The way fast greedy works is by first declaring each node its own
+community, then it combines nodes greedily, that is to say maximizing
+the increase in modularity for each step, and stops when it can no
+longer increase the modularity. One thing to look out for is when
+working with larger networks, it can fail to find smaller communities
+.</p>
+<p>The way the louvain community detection works is by declaring each
+node its own community, then moves nodes into the community that
+increases the modularity the most, and then collapses the communities
+into super nodes. The way walktrap works is by starting a random walk in
+to run short random walks. The idea is that nodes in the same community
+will appear more on these short random walks.</p>
 </div>
 <div id="analyze-and-interpret-the-resulting-communities" class="section level2">
 <h2>Analyze and interpret the resulting communities</h2>
+<p>Comparing the results from the algorithms was interesting. Starting
+with the <a href="#and-then-we-compare-modularity">modularity of our
+subgraphs</a>, none of the graphs had very large modularity. Below is
+the results</p>
+<p><span class="math display">\[\begin{array} &amp;\text{subgraph
+#}&amp;\text{fast greedy}&amp;\text{louvain}&amp;\text{walktrap} \\
+1&amp; 0.1911257 &amp;0.2461304 &amp;0.15813260 \\
+2&amp; 0.3522581 &amp;0.3608913 &amp;0.29551518 \\
+3&amp; 0.1545764 &amp;0.2025717 &amp;0.10072104 \\
+4&amp; 0.2772735 &amp;0.3141144 &amp;0.08605815
+\end{array}\]</span></p>
+<p>In class, we learned that modularity over <span class="math inline">\(.3\)</span> suggests meaningful community
+structure. However, only subgraphs 2 and 4 had any communities with
+modularity at least this high. However, subgraphs 1 and 3 still had
+modularity <span class="math inline">\(.246\)</span> and <span class="math inline">\(.202\)</span> respectively most modular community
+structrues, which isn’t that much smaller than <span class="math inline">\(.3\)</span>.</p>
+<p>This suggests that our network has a weak community structure.</p>
 </div>
 </div>
 <div id="adjacency-matrix" class="section level1">
@@ -1900,7 +1932,7 @@ to report</a></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">is_directed</span>(g)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
-<pre><code>## IGRAPH 37f0ac2 U--- 5201 217073 --</code></pre>
+<pre><code>## IGRAPH 5c9a7c7 U--- 5201 217073 --</code></pre>
 </div>
 <div id="creating-subgraphs" class="section level2">
 <h2>Creating Subgraphs</h2>
