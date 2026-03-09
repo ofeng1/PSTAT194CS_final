@@ -121,7 +121,7 @@ This gives us the biggest differences between the different community finding al
 
 ## Examine the adjacency matrix of your network.
 
-Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the louvain method, we can see very little pattern. The most of a pattern I can see is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This is expected since our nodes have not been ordered yet.
+We felt it was important to show at the unordered adjacency matrix to show what an uncorrelated adjacency matrix looks like. Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the louvain method, we can see very little pattern. The most of a pattern one could make out is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This lack of pattern is expected since our nodes have not been ordered yet. 
 
 ## Reorder vertices to highlight patterns.
 
@@ -131,11 +131,9 @@ After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pa
 - We can see many horizontal/vertical lines, especially the areas overlapping with the nodes of the first community. This shows that the first community has a higher average degree than the other communities. 
 - The other 4 communities have a much lower degree on average, and are much less connected among themselves, and have lots of empty space in their squares. This shows that our subgraph is quite sparse. 
 
-# Reorder Nodes:
+Our subgraph consisted on a single connected component. Thus we cannot reorder our network by connected components. 
 
-## Reorder nodes based on community or connected component.
-
-## Observe changes in the adjacency matrix and identify clearer patterns
+One thing we wonder is our sampling strategy effected this result. Recall we selected 40 random nodes, then for each node, selected either 5 neighbors, or if they didn't have 5 neighbors, all of their neighbors. Then we selected 200 of those nodes. Thus, most of the nodes we chose were not quite randomly chosen, but conditioned on being neighbors with a random node, which biases the nodes we chose to those with a higher degree. Thus our network consists of nodes that are connected to more nodes than the typical node in our network. This could lead to less communities that are larger than expected in our subgraphs. 
 
 # Summarize Findings:
 
