@@ -76,7 +76,9 @@ When we look at the individual subgraphs, we can see a similar pattern. Each sub
 
 The eigen centrality metric is a measure of centrality that, according to the documentation, states "eigenvector centrality scores correspond to the values of the principal eigenvector of the graph's adjacency matrix; these scores may, in turn, be interpreted as arising from a reciprocal process in which the centrality of each actor is proportional to the sum of the centralities of those actors to whom he or she is connected. In general, vertices with high eigenvector centralities are those which are connected to many other vertices which are, in turn, connected to many others (and so on)" from [here](https://r.igraph.org/reference/eigen_centrality.html). The thing to keep in mind is that the score gets bigger when a node is connected to more nodes, and these nodes are connected to more nodes, and so on. 
 
-Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we can see that
+Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we will start with the histograms. We can see that eigen centrality is distributed on $[0,1]$, where 1 is more connected. Looking at our subgraphs, we see the mode is at $[0,.1]$, with a second, much smaller, peak at about $[.4,.5]$. Comparing these to our degree distributions, we can see their shape is similar, with a main peak at 0, and a second smaller peak towards the middle of the data, which makes sense because both these node metrics are correlated. To show how this data looks when plotting the whole network, we cannot use the raw eigen metric because our nodes are too small, so we will use a transformation of the data. To give the reader an idea what this transformation does, we also plotted the histogram of the transformed data for the first subgraph.
+
+Looking at the actual plots, we can see there there are a bunch of central nodes that are grouped together, and then there are some less connected peripheral nodes, that are very small. This is most prominant on subgraph 3. This shows eigen centrality is a good measure of centrality.
 
 # Community Detection:
 
@@ -530,7 +532,8 @@ plot(subg4,
 ```{r EigenCentrality, cache=TRUE}
 print("Eigen Centrality SubGraph 1", quote=FALSE)
 eig_subg1 <- eigen_centrality(subg1)$vector
-head(eig_subg1)
+hist(eig_subg1)
+hist(15*sqrt(sqrt(eig_subg1)))
 plot(subg1,
      layout = layout_with_kk(subg1),
      vertex.size = 15*sqrt(sqrt(eig_subg1)),
@@ -541,7 +544,7 @@ plot(subg1,
 
 print("Eigen Centrality SubGraph 2", quote=FALSE)
 eig_subg2 <- eigen_centrality(subg2)$vector
-head(eig_subg2)
+hist(eig_subg2)
 plot(subg2,
      layout = layout_with_kk(subg2),
      vertex.size = 15*sqrt(sqrt(eig_subg2)),
@@ -552,7 +555,7 @@ plot(subg2,
 
 print("Eigen Centrality SubGraph 3", quote=FALSE)
 eig_subg3 <- eigen_centrality(subg3)$vector
-head(eig_subg3)
+hist(eig_subg3)
 plot(subg3,
      layout = layout_with_kk(subg3),
      vertex.size = 15*sqrt(sqrt(eig_subg3)),
@@ -563,7 +566,7 @@ plot(subg3,
 
 print("Eigen Centrality SubGraph 4", quote=FALSE)
 eig_subg4 <- eigen_centrality(subg4)$vector
-head(eig_subg4)
+hist(eig_subg4)
 plot(subg4,
      layout = layout_with_kk(subg4),
      vertex.size = 15*sqrt(sqrt(eig_subg4)),
