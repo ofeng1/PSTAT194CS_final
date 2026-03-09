@@ -47,7 +47,7 @@ Using the basic plotting, we plotted using the default layouts.
 
 ## Use three different layouts from the igraph package to visualize each network.
 
-For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold layout, the Kamada-Kawai layout, and the layout nicely, where the plots can be found [here](#visualize-the-networks:). 
+For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold layout, the Kamada-Kawai layout, and the layout nicely, where the plots can be found [here](#three-different-visualizations). 
 
 ## Experiment with node and edge attributes to enhance visualizations.
 
@@ -268,7 +268,7 @@ plot(subg4,
   edge.width=2)
 ```
 
-# Visualize the Networks:
+# Three Different Visualizations
 
 ```{r Visualize, cache = TRUE}
 
