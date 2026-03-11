@@ -19,6 +19,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+#Introduction:
+
+For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. This network consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Our graph has 2 node attribute. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
+
+The objective our analysis is to see what the structure of wikipedia articles looks like, and to see if we can get an idea of what attribute influence how much traffic a node gets. 
+
 # Load and Prepare the Data
 
 ## Load your chosen dataset into the course RStudio server and convert it to an ‘igraph’ object.
