@@ -209,6 +209,12 @@ The attribute target is average monthly traffic (October 2017 - November 2018).
 hist(log(V(g)$target, base=10))
 ```
 
+Plotting the log transformation of the monthly traffic and length of word list shows no correlation
+
+```{r}
+plot(log(V(g)$target), log(lengths(V(g)$features)))
+```
+
 
 
 
