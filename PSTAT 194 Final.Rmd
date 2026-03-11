@@ -186,6 +186,20 @@ is_directed(g)
 summary(g)
 ```
 
+A brief look at the network features. These are specific nouns in the articles. 
+
+```{r}
+hist(lengths(V(g)$features))
+```
+
+The attribute target is related to the network traffic. We believe that it is the actual network traffic. However, the paper our network comes from is trying to predict network traffic, and this could be a result of that. 
+
+```{r}
+hist(log(V(g)$target, base=10))
+```
+
+
+
 
 ## Creating Subgraphs
 
@@ -390,6 +404,9 @@ for (i in names(graphs)) {
 
 
 ```
+
+One other visualization of the graphs using underlying features
+
 
 
 ## Community Detection
