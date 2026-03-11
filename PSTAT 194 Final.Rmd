@@ -266,6 +266,7 @@ subg1 <- induced_subgraph(g, unique(sampled_vertices)[1:200])
 ### Plot 1
 
 ```{r}
+set.seed(31126)
 plot(subg1,
   vertex.size=10,
   vertex.label.cex=.4,
@@ -422,7 +423,32 @@ for (i in names(graphs)) {
 
 ```
 
-One other visualization of the graphs using underlying features
+
+### Other network Visualizations
+
+Here are some other visualizations of the subgraphs displaying certain attributes
+
+```{r}
+set.seed(31126)
+plot(
+  subg1,
+  layout = layout_nicely,
+  vertex.size=2*log(V(subg1)$target, base=10),
+  vertex.label.cex=.4,
+  edge.width=2,
+  main="subg1 where size is log internet traffic"
+)
+set.seed(31126)
+plot(
+  subg1,
+  layout = layout_nicely,
+  vertex.size=2*log(lengths(V(subg1)$features)),
+  vertex.label.cex=.4,
+  edge.width=2,
+  main="subg1 where size is log length of the word list"
+)
+
+```
 
 
 
