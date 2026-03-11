@@ -192,7 +192,7 @@ A brief look at the network features. These are specific nouns in the articles.
 hist(lengths(V(g)$features))
 ```
 
-The attribute target is related to the network traffic. We believe that it is the actual network traffic. However, the paper our network comes from is trying to predict network traffic, and this could be a result of that. 
+The attribute target is average monthly traffic (October 2017 - November 2018).
 
 ```{r}
 hist(log(V(g)$target, base=10))
