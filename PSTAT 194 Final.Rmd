@@ -155,9 +155,17 @@ library(tidygraph)
 
 edges_matrix <- as.matrix(read.csv("musae_squirrel_edges.csv"))
 
+json_data <- fromJSON("squirrel.json")
+
+target_data <- read.csv('squirrel_target.csv')
+
 edges_matrix[,1] <- factor(edges_matrix[,1]) # if we dont change this to factor, then there are too many id names idk. If you don't believe me comment this out :/
 
 g <- graph_from_edgelist(edges_matrix, directed = FALSE)
+
+V(g)$features <- json_data
+
+V(g)$target <- target_data$target
 
 ```
 
