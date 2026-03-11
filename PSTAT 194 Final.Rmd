@@ -21,25 +21,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction:
 
-For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. This network consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Our graph has 2 node attribute. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
+For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. This network consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. Our graph has 2 node attribute. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
 
 The objective our analysis is to see what the structure of wikipedia articles looks like, and to see if we can get an idea of what attribute influence how much traffic a node gets. 
 
-# Load and Prepare the Data
+# Methodology:
 
-## Load your chosen dataset into the course RStudio server and convert it to an ‘igraph’ object.
+## Steps followed in data processing.
 
-We loaded the data in [Code Snippet 1](#snippet-1)
-
-
-## Consider what the vertices and edges represent in your network.
-
-In our network, the vertices represent wikipedia articles, and edges represent mutual links between them. Since we are using the musae squirrel network, our articles are about topics related to squirrels, and the edges are mutual links between them. 
-
-
-## Identify basic network elements: vertices, edges, weights, directionality, etc
-
-Using code [snippet 2](#snippet-2), we can see that we have 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. 
+The first thing we did was we loaded a few `r` packages, including `igraph`, `tidygraph`, `jsonlite`, and `tidyr`, along with the data in [Code Snippet 1](#snippet-1). The graph data we had was an edge list, which we turned into a graph by turning it into a matrix, then turning this matrix into a graph using the `graph_from_edgelist` from the `igraph` package. We loaded the json data using the `fromJSON` function from the `jsonlite` package. Lastly, we loaded in the target data using the `read.csv` function from base `r`. We then added these as vertex attributes. 
 
 # Generate Induced Subgraphs:
 
@@ -158,6 +148,8 @@ One thing we wonder is our sampling strategy effected this result. Recall we sel
 library(igraph)
 #install.packages('tidygraph')
 library(tidygraph)
+library(jsonlite )
+library(tidyr)
 
 edges_matrix <- as.matrix(read.csv("musae_squirrel_edges.csv"))
 
