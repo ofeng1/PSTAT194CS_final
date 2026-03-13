@@ -3,16 +3,16 @@ title: "PSTAT 194 Final Project"
 author: "Ayden Kelleher"
 date: "2026-03-04"
 output:
-  word_document:
-    toc: true
-  pdf_document:
-    toc: true
   html_document:
     toc: true
     toc_float: true
     code_folding: show
     theme: flatly
     highlight: tango
+  pdf_document:
+    toc: true
+  word_document:
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
@@ -102,6 +102,12 @@ $$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walkt
 
 In class, we learned that modularity over $.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 had any communities with modularity at least this high. However, subgraphs 1 and 3 still had modularity $.246$ and $.202$ respectively most modular community structrues, which isn't that much smaller than $.3$. This suggests that our network has a weak community structure. 
 
+### Monte Carlo Estimate of Modularity
+
+To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by generating a bunch of graphs using the vertices
+
+### Analyzing communities
+
 Looking at the number of individual communities for each subgraph, we can see the following. 
 
 $$\begin{array}
@@ -113,6 +119,10 @@ $$\begin{array}
 \end{array}$$
 
 This gives us the biggest differences between the different community finding algorithms. We can see that both the fast greedy and the louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the walktrap has many isolated nodes that count as their own communities. This tells us if a node is relatively disconnected from the rest of the network, the walktrap will have a hard time placing it in a larger community. 
+
+
+
+
 
 
 # Adjacency Matrix:
@@ -133,9 +143,7 @@ Our subgraph consisted on a single connected component. Thus we cannot reorder o
 
 One thing we wonder is our sampling strategy effected this result. Recall we selected 40 random nodes, then for each node, selected either 5 neighbors, or if they didn't have 5 neighbors, all of their neighbors. Then we selected 200 of those nodes. Thus, most of the nodes we chose were not quite randomly chosen, but conditioned on being neighbors with a random node, which biases the nodes we chose to those with a higher degree. Thus our network consists of nodes that are connected to more nodes than the typical node in our network. This could lead to less communities that are larger than expected in our subgraphs. 
 
-# Monte Carlo Estimate of Modularity
 
-To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by 
 
 # Results:
 
@@ -755,16 +763,26 @@ plot(subg4,
 ```{r, eval=FALSE}
 set.seed(123) # For reproducibility
 n_sim <- 1000
-null_mods <- numeric(n_sim)
+null_mods <- list(numeric(n_sim),numeric(n_sim),numeric(n_sim),numeric(n_sim))
 
 for(i in 1:n_sim) {
   # Create a randomized graph preserving degree distribution
   # "degseq" method keeps the degree of each node the same
-  rg <- sample_degseq(degree(subg1), method = "vl")
+  rg1 <- sample_degseq(degree(subg1), method = "vl")
+  rg2 <- sample_degseq(degree(subg2), method = "vl")
+  rg3 <- sample_degseq(degree(subg3), method = "vl")
+  rg4 <- sample_degseq(degree(subg4), method = "vl")
   
   # Run the SAME community detection algorithm on the random graph
-  r_comm <- cluster_louvain(rg)
-  null_mods[i] <- modularity(r_comm)
+  r_comm1 <- cluster_louvain(rg1)
+  r_comm2 <- cluster_louvain(rg2)
+  r_comm3 <- cluster_louvain(rg3)
+  r_comm4 <- cluster_louvain(rg4)
+  
+  null_mods[[1]][i] <- modularity(r_comm1)
+  null_mods[[2]][i] <- modularity(r_comm2)
+  null_mods[[3]][i] <- modularity(r_comm3)
+  null_mods[[4]][i] <- modularity(r_comm4)
 }
 
 save(null_mods, file="null_mods.rda")
@@ -773,10 +791,31 @@ save(null_mods, file="null_mods.rda")
 ```{r}
 load('null_mods.rda')
 
-hist(null_mods, main="Modularity of random graph with connectivity of subg1",
-     xlim=c(min(null_mods), max(0.2477544, max(null_mods))))
+hist(null_mods[[1]], main="Modularity of random graph with connectivity of subg1",
+     xlim=c(min(null_mods[[1]]), max(0.2477544, max(null_mods[[1]]))))
 
 abline(v=0.2477544, col="red", lwd=3, lty=2)
+legend("topright", legend=c("Observed", "Null Dist"), 
+       col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
+
+hist(null_mods[[2]], main="Modularity of random graph with connectivity of subg2",
+     xlim=c(min(null_mods[[2]]), max(0.3608913, max(null_mods[[2]]))))
+
+abline(v=0.3608913, col="red", lwd=3, lty=2)
+legend("topright", legend=c("Observed", "Null Dist"), 
+       col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
+
+hist(null_mods[[3]], main="Modularity of random graph with connectivity of subg3",
+     xlim=c(min(null_mods[[3]]), max(0.2025717, max(null_mods[[3]]))))
+
+abline(v=0.2025717, col="red", lwd=3, lty=2)
+legend("topright", legend=c("Observed", "Null Dist"), 
+       col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
+
+hist(null_mods[[4]], main="Modularity of random graph with connectivity of subg4",
+     xlim=c(min(null_mods[[4]]), max(0.3141144, max(null_mods[[4]]))))
+
+abline(v=0.3141144, col="red", lwd=3, lty=2)
 legend("topright", legend=c("Observed", "Null Dist"), 
        col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
 ```
