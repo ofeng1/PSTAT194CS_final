@@ -159,13 +159,6 @@ Our subgraph consisted on a single connected component. Thus we cannot reorder o
 One thing we wonder is our sampling strategy effected this result. Recall we selected 40 random nodes, then for each node, selected either 5 neighbors, or if they didn't have 5 neighbors, all of their neighbors. Then we selected 200 of those nodes. Thus, most of the nodes we chose were not quite randomly chosen, but conditioned on being neighbors with a random node, which biases the nodes we chose to those with a higher degree. Thus our network consists of nodes that are connected to more nodes than the typical node in our network. This could lead to less communities that are larger than expected in our subgraphs. 
 
 
-
-# Results:
-
-## Key findings from the analysis.
-
-## Visual and textual summaries.
-
 # Conclusion:
 
 ## Summary of insights gained.
