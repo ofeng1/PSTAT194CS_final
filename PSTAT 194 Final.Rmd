@@ -133,6 +133,10 @@ Our subgraph consisted on a single connected component. Thus we cannot reorder o
 
 One thing we wonder is our sampling strategy effected this result. Recall we selected 40 random nodes, then for each node, selected either 5 neighbors, or if they didn't have 5 neighbors, all of their neighbors. Then we selected 200 of those nodes. Thus, most of the nodes we chose were not quite randomly chosen, but conditioned on being neighbors with a random node, which biases the nodes we chose to those with a higher degree. Thus our network consists of nodes that are connected to more nodes than the typical node in our network. This could lead to less communities that are larger than expected in our subgraphs. 
 
+# Monte Carlo Estimate of Modularity
+
+To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by 
+
 # Results:
 
 ## Key findings from the analysis.
@@ -743,3 +747,36 @@ plot(subg4,
      edge.color = "gray80",
      edge.width = 0.5)
 ```
+
+## Monte Carlo Modularity
+
+[back to report](#monte-carlo-estimate-of-modularity)
+
+```{r, eval=FALSE}
+set.seed(123) # For reproducibility
+n_sim <- 1000
+null_mods <- numeric(n_sim)
+
+for(i in 1:n_sim) {
+  # Create a randomized graph preserving degree distribution
+  # "degseq" method keeps the degree of each node the same
+  rg <- sample_degseq(degree(subg1), method = "vl")
+  
+  # Run the SAME community detection algorithm on the random graph
+  r_comm <- cluster_louvain(rg)
+  null_mods[i] <- modularity(r_comm)
+}
+
+save(null_mods, file="null_mods.rda")
+```
+
+```{r}
+load('null_mods.rda')
+
+hist(null_mods)
+```
+
+
+
+
+
