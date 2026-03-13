@@ -104,7 +104,7 @@ In class, we learned that modularity over $.3$ suggests meaningful community str
 
 ### Monte Carlo Estimate of Modularity
 
-To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by generating a bunch of graphs using the vertices
+To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by generating a bunch of graphs using the amount of vertices and edges where the vertices had the same or about the same degree for each vertex, that the subgraphs had the connections between nodes randomly selected. Since the observed modularity is much larger than the modularity of the simulated graphs, we can confirm that our network has a meaningful community structure. 
 
 ### Analyzing communities
 
@@ -154,6 +154,8 @@ One thing we wonder is our sampling strategy effected this result. Recall we sel
 # Conclusion:
 
 ## Summary of insights gained.
+
+Looking at our network, we are able to say that there is significant structure to how links between wikipedia articles. 
 
 ## Possible future directions for further analysis.
 
