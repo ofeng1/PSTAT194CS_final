@@ -19,9 +19,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Introduction:
+# Introduction:
 
-For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. This network consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. Our graph has 2 node attribute. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
+For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. Our graph has 2 node attributes. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
 
 The objective our analysis is to see what the structure of wikipedia articles looks like, and to see if we can get an idea of what attribute influence how much traffic a node gets. 
 
@@ -37,9 +37,7 @@ The first thing we did was we loaded a few `r` packages, including `igraph`, `ti
 
 To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, we ran into the issue that much of our graph had degree zero, with 79 out of 200 nodes being unconnected to any other node, in contrast to our entire graph g have no points that are of degree zero. Thus any random sample would lose some structure. 
 
-To get around this, what we did instead was to draw a sample of 40 different nodes. Then we took a sample of 5 different neighbors of the nodes, or all of the neighbors if they had less than 5 total neighbors. Then we take 200 of those nodes, and put it in a subgraph. This subgraph is a biased subgraph, but it preserves some of the structure of the graph. We did this in each of the subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4)
-
-Using the basic plotting, we plotted using the default layouts.
+To get around this, what we did instead was to draw a sample of 40 different nodes. Then we took a sample of 5 different neighbors of the nodes, or all of the neighbors if they had less than 5 total neighbors. Then we take 200 of those nodes, and put it in a subgraph. This subgraph is a biased subgraph, but it preserves some of the structure of the graph. We did this in each of the subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4), though we have better visualizations of our network. 
 
 # Visualize the Networks:
 
@@ -52,6 +50,7 @@ For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold l
 To enhance out visualizations, we chose to do a few different things
 
   - adjust the node size by the following function of degree `3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))`
+  - adjust the node size by the attributes, specifically log internet traffic and log length of the wordlist. 
   - color in nodes based on louvain communities to make the groupings more obvious
   - remove the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read.
   - Make the lines between the nodes more see through so they take up less of the visual space.
@@ -822,7 +821,105 @@ legend("topright", legend=c("Observed", "Null Dist"),
        col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
 ```
 
+# Analyzing Network Metrics (Betweenness)
+
+[back to report](#betweenness)
+
+```{r Betweenness, cache=TRUE}
+print("Betweenness SubGraph 1", quote=FALSE)
+bet_subg1 <- betweenness(subg1)
+hist(bet_subg1)
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = 2*log(bet_subg1+1),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Betweenness SubGraph 2", quote=FALSE)
+bet_subg2 <- betweenness(subg2)
+hist(bet_subg2)
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = 2*log(bet_subg1+1),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Betweenness SubGraph 3", quote=FALSE)
+bet_subg3 <- betweenness(subg3)
+hist(bet_subg3)
+plot(subg3,
+     layout = layout_with_kk(subg3),
+     vertex.size = 2*log(bet_subg3+1),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Betweenness SubGraph 4", quote=FALSE)
+bet_subg4 <- betweenness(subg4)
+hist(bet_subg4)
+plot(subg1,
+     layout = layout_with_kk(subg4),
+     vertex.size = 2*log(bet_subg4+1),
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
 
 
+# Analyzing Network Metrics (Betweenness)
+
+[back to report](#betweenness)
+
+```{r Closeness, cache=TRUE}
+print("Closeness SubGraph 1", quote=FALSE)
+close_subg1 <- closeness(subg1)
+hist(close_subg1)
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = 4000*close_subg1,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Closeness SubGraph 2", quote=FALSE)
+close_subg2 <- closeness(subg2)
+hist(close_subg2)
+plot(subg1,
+     layout = layout_with_kk(subg1),
+     vertex.size = 4000*close_subg2,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Closeness SubGraph 3", quote=FALSE)
+close_subg3 <- closeness(subg3)
+hist(close_subg3)
+plot(subg3,
+     layout = layout_with_kk(subg3),
+     vertex.size = 4000*close_subg3,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+
+print("Closeness SubGraph 4", quote=FALSE)
+close_subg4 <- closeness(subg4)
+hist(close_subg4)
+plot(subg1,
+     layout = layout_with_kk(subg4),
+     vertex.size = 4000*close_subg4,
+     vertex.label=NA,
+      edge.arrow.size = 0.1,
+     edge.color = "gray80",
+     edge.width = 0.5)
+```
 
 
