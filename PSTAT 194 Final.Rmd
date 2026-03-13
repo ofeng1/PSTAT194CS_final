@@ -773,7 +773,12 @@ save(null_mods, file="null_mods.rda")
 ```{r}
 load('null_mods.rda')
 
-hist(null_mods)
+hist(null_mods, main="Modularity of random graph with connectivity of subg1",
+     xlim=c(min(null_mods), max(0.2477544, max(null_mods))))
+
+abline(v=0.2477544, col="red", lwd=3, lty=2)
+legend("topright", legend=c("Observed", "Null Dist"), 
+       col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
 ```
 
 
