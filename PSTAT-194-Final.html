@@ -1994,9 +1994,33 @@ communities that are larger than expected in our subgraphs.</p>
 <h2>Summary of insights gained.</h2>
 <p>Looking at our network, we are able to say that there is significant
 structure to how links between wikipedia articles.</p>
+<p>Looking at the plots of the sub networks, we can see there are some
+more centralized nodes and more peripheral nodes. We did not find a
+strong relationship between internet traffic node centrality, or between
+length of the word list and centrality, that is to say node size looked
+distributed independent of whether the node was in the middle or edge of
+the plot, but suspect a relationship may be apparent if we had a larger
+subgraph size.</p>
+<p>Our graph had significant community structure, but there was a lot of
+connections between communities, giving us a smaller modularity than
+many other networks. This makes intuitive sense because if you think of
+links from wikipedia, there are tons on any given page, and many are to
+articles very close to the subject on that page, and many are to
+articles barely related to the page.</p>
 </div>
 <div id="possible-future-directions-for-further-analysis." class="section level2">
 <h2>Possible future directions for further analysis.</h2>
+<ul>
+<li>bigger subgraphs, or maybe even whole graph.</li>
+<li>closer look at attributes
+<ul>
+<li>ideally know what the words are</li>
+<li>if possible, look at what percentage of internet traffic came from
+articles in this graph compared to from an outside source. That might be
+more insightful for this graph.</li>
+</ul></li>
+<li></li>
+</ul>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -2068,7 +2092,7 @@ to report</a></p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">is_directed</span>(g)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
-<pre><code>## IGRAPH 1340f20 U--- 5201 217073 -- 
+<pre><code>## IGRAPH 253af34 U--- 5201 217073 -- 
 ## + attr: features (v/x), target (v/n)</code></pre>
 <p>A brief look at the network features. These are specific nouns in the
 articles.</p>

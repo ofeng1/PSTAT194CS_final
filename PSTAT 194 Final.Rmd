@@ -172,7 +172,17 @@ One thing we wonder is our sampling strategy effected this result. Recall we sel
 
 Looking at our network, we are able to say that there is significant structure to how links between wikipedia articles. 
 
+Looking at the plots of the sub networks, we can see there are some more centralized nodes and more peripheral nodes. We did not find a strong relationship between internet traffic node centrality, or between length of the word list and centrality, that is to say node size looked distributed independent of whether the node was in the middle or edge of the plot, but suspect a relationship may be apparent if we had a larger subgraph size. 
+
+Our graph had significant community structure, but there was a lot of connections between communities, giving us a smaller modularity than many other networks. This makes intuitive sense because if you think of links from wikipedia, there are tons on any given page, and many are to articles very close to the subject on that page, and many are to articles barely related to the page. 
+
 ## Possible future directions for further analysis.
+
+- bigger subgraphs, or maybe even whole graph. 
+- closer look at attributes
+  - ideally know what the words are
+  - if possible, look at what percentage of internet traffic came from articles in this graph compared to from an outside source. That might be more insightful for this graph. 
+- 
 
 # References:
 
