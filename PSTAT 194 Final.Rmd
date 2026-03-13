@@ -67,7 +67,23 @@ When we look at the individual subgraphs, we can see a similar pattern. Each sub
 
 ### Closeness
 
+The closeness metric is a measure of how close every other node is to a specific node. The formula is 
+
+$$C_C(v_i) = \frac{n-1}{\sum_{i\not=j}d(v_i,v_j)}$$
+
+which is basically the inverse of the sum of the distances to all other nodes, normalized so if the distance for all nodes was 1, then it would have a closeness of 1. 
+
+Looking at the [plots of the closeness](#analyzing-network-metrics-closeness), we can see that while nodes towards the edges of our plot look much smaller than most of the nodes, the majority oof nodes are of similar size. This suggests that our network consists of a largely interconnected network, where most nodes are similar distances to most other nodes. 
+
 ### Betweenness
+
+The betweenness centrality of a node $v_i$ is calculated by the following
+
+$$C_B(v_i) = \sum_{i\not=j\not=k} \frac{\sigma_{jk}(v_i)}{\sigma_{jk}}$$
+
+which basically means the number of shortest paths between $v_j$ and $v_k$ that include $v_i$ in it divided by the total number of shortest paths between $v_j$ and $v_k$.
+
+Looking at the [plot of our betweenness centrality](#analyzing-network-metrics-betweenness), we can that the histogram is skewed right, suggesting that some nodes have a much larger betweenness centrality. Looking at the plot of the network using vertex size as log betweenness centrality, we see variation in the node sizes. Nodes on the edges are almost size zero, which makes sense. There are also many larger nodes near the edges and small nodes closer to the center suggesting that for some connected nodes, there are paths that don't use them that are quicker between many different nodes. 
 
 ### Eigen Metric
 
@@ -821,7 +837,7 @@ legend("topright", legend=c("Observed", "Null Dist"),
        col=c("red", "black"), lty=c(2,1), lwd=c(3,1))
 ```
 
-# Analyzing Network Metrics (Betweenness)
+## Analyzing Network Metrics (Betweenness)
 
 [back to report](#betweenness)
 
@@ -872,9 +888,9 @@ plot(subg1,
 ```
 
 
-# Analyzing Network Metrics (Betweenness)
+## Analyzing Network Metrics (Closeness)
 
-[back to report](#betweenness)
+[back to report](#closeness)
 
 ```{r Closeness, cache=TRUE}
 print("Closeness SubGraph 1", quote=FALSE)
