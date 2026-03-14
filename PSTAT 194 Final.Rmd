@@ -1,6 +1,6 @@
 --- 
 title: "PSTAT 194 Final Project" 
-author: "Ayden Kelleher" 
+author: "Ayden Kelleher, Owen Feng, Yuxin Chen, Henry Bergeson" 
 date: "2026-03-04" 
 output: pdf_document
 --- 
@@ -13,7 +13,7 @@ output: pdf_document
 
 For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of Wikipedia articles, where the nodes represent wikipedia articles on squirrels and the edges represent mutual hyperlinks between those articles. Because edges only exist when two articles link to each other, the graph is undirected. 
 
-Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted and undirected, and that it contains two node attributes. The first attribute, `target`, is the average monthly traffic to each article from October 2017 - November 2018. The second attribute, `features`, is a list containing a collection of numbers corresponding to pecific nons ppeaing in the articles. However, we were unable to determine which nouns corresponded to which number. Histograms of these attributes are shown [here](#snippet-2) to provide a basic overview of their distributions. 
+Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted and undirected, and that it contains two node attributes. The first attribute, `target`, is the average monthly traffic to each article from October 2017 - November 2018. The second attribute, `features`, is a list containing a collection of numbers corresponding to pecific nouns appearing in the articles. However, we were unable to determine which nouns corresponded to which number. Histograms of these attributes are shown [here](#snippet-2) to provide a basic overview of their distributions. 
 
 The objective our analysis is to explore the structural properties of the squirrels Wikipedia article network and to investigate whether certain attributes influence the amount of traffic a node receives. 
 
@@ -51,11 +51,15 @@ To enhance out visualizations and make them more interpretable, we chose to do a
 
 - Removed the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read. 
 
-- Made the lines between the nodes more see through so they take up less of the visual space. # Analyze Network Metrics: ## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network. 
+- Made the lines between the nodes more see through so they take up less of the visual space. 
 
-### Degree The degree of a node measures the number of edges connected to that node. 
+# Analyze Network Metrics: 
 
-In directed graphs, this can be separated into in-degree and out-degree, but since our graph is undirected, the degree simply counts the total number of edges connected to each node. We first examined the [histogram of node degrees](#analyzing-network-metrics-degree) for the entire network. From our plots, we can see that the distribution is heavily right-skewed, with a large concentration of nodes in the $[0,100]$. This seems to indicate that most Wikipedia articles in the network link to relatively few other articles, while a smaller number of nodes have much higher connectivity. This distributions suggests that we have a few highly connected articles that as hubs within our network. 
+## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network. 
+
+### Degree 
+
+The degree of a node measures the number of edges connected to that node. In directed graphs, this can be separated into in-degree and out-degree, but since our graph is undirected, the degree simply counts the total number of edges connected to each node. We first examined the [histogram of node degrees](#analyzing-network-metrics-degree) for the entire network. From our plots, we can see that the distribution is heavily right-skewed, with a large concentration of nodes in the $[0,100]$. This seems to indicate that most Wikipedia articles in the network link to relatively few other articles, while a smaller number of nodes have much higher connectivity. This distributions suggests that we have a few highly connected articles that as hubs within our network. 
 
 When we look at individual subgraphs, we observe a similar pattern. Each subgraph's degree distribution is right-skewed, meaning that most nodes have relatively low degree while a small number of nodes are highly connected. The most connected nodes in the subgraph (highlighted in yellow) have degrees just under 100, which is a slightly less than half of the nodes in each subgraph. This behavior is consistent with our full network, where the most connected nodes are also linked to roughly half of the other nodes. An interesting pattern that appears in each subgraph is bimodality, with a secondary peak in the degree range $[30, 50]$. 
 
@@ -107,7 +111,15 @@ The Walktrap community detection algorithm works by performing short random walk
 
 Comparing the results from the algorithms was interesting. Starting with the [modularity of our subgraphs](#and-then-we-compare-modularity), we see that none of the graphs have particularly high modularity. The results are shown below: 
 
-$$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walktrap} \\ 1& 0.1911257 &0.2461304 &0.15813260 \\ 2& 0.3522581 &0.3608913 &0.29551518 \\ 3& 0.1545764 &0.2025717 &0.10072104 \\ 4& 0.2772735 &0.3141144 &0.08605815 \end{array}$$
+$$
+\begin{array}{rccc}
+\text{subgraph} & \text{Fast-Greedy} & \text{Louvain} & \text{Walktrap} \\
+1 & 0.1911257 & 0.2461304 & 0.15813260 \\
+2 & 0.3522581 & 0.3608913 & 0.29551518 \\
+3 & 0.1545764 & 0.2025717 & 0.10072104 \\
+4 & 0.2772735 & 0.3141144 & 0.08605815
+\end{array}
+$$
 
 From lecture, we learned that modularity over $0.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 hadimitation any communities with modularity at least this high. Subgraphs 1 and 3 had modularity of $0.246$ and $0.202$ for their most modular community structrues, which aren't much smaller than $0.3$. This suggests that our network has a weak community structure. 
 
@@ -119,7 +131,15 @@ To test if our community structure was meaningful, we ran a [monte carlo](#monte
 
 Looking at the number of individual communities for each subgraph, we can see the following: 
 
-$$\begin{array} & \text{subgraph #}& \text{fast greedy}& \text{louvain}& \text{walktrap} \\ 1 &6 &5 &31 \\ 2 &6 &6 &27 \\ 3 &4 &7 &27 \\ 4 &6 &5 &20 \end{array}$$
+$$
+\begin{array}{rccc}
+\text{subgraph} & \text{Fast-Greedy} & \text{Louvain} & \text{Walktrap} \\
+1 &6 &5 &31 \\ 
+2 &6 &6 &27 \\ 
+3 &4 &7 &27 \\
+4 &6 &5 &20 
+\end{array}
+$$
 
 This gives us the biggest differences between the different community finding algorithms. We can see that both the Fast-Greedy and the Louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the Walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the Walktrap has many isolated nodes that count as their own communities. This tells us if a node is relatively disconnected from the rest of the network, the Walktrap will have a hard time placing it in a larger community. 
 
@@ -127,7 +147,9 @@ This gives us the biggest differences between the different community finding al
 
 ## Examine the adjacency matrix of your network.
 
-We felt it was important to show at the unordered adjacency matrix to illustrate what an uncorrelated adjacency matrix looks like. Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the Louvain method, we observe very little visible structure. The only noticeable pattern are a few horizontal and vertical lines, which represent nodes with many connections, and a few faint blocks, indicating groups of nodes connected to similar sets of nodes. This lack of structure is expected since our nodes have not yet been reordered based on their communities. ## Reorder vertices to highlight patterns. 
+We felt it was important to show at the unordered adjacency matrix to illustrate what an uncorrelated adjacency matrix looks like. Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the Louvain method, we observe very little visible structure. The only noticeable pattern are a few horizontal and vertical lines, which represent nodes with many connections, and a few faint blocks, indicating groups of nodes connected to similar sets of nodes. This lack of structure is expected since our nodes have not yet been reordered based on their communities. 
+
+## Reorder vertices to highlight patterns. 
 
 After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. There are five squares of varying density along the diagonal, which correspond to groups of nodes that are more densely connected with one another. This matches the five communities identified in Subgraph 1 by the Louvain method, confirming that these blocks represent the detected communities. Some observations we made were that There are five squares of varying density along the diagonal. This matches the five communities identifiedin subgraph 1 by the Louvain method, confirming that these blocks represent our detected communities. Some observations we made were that: 
 
@@ -145,9 +167,18 @@ One question we considered is whether our sampling strategy affected this result
 
 ## Summary of insights gained. 
 
-Looking at our network, we can see that there is significant structure to how links form between Wikipedia articles. From the plots of the subgraphs, we can see there are both centrailized and more peripheral nodes. We did not find a strong relationship between Internet traffic and node centrality, or between length of the word list and centrality. In other words, node size appeared to be distributed independently of whether a node was located near the center or the edge of the plot. However, we suspect that a relationship may become clearer if we were able to analyze larger subgraphs. While our graph had meaningful community structure, there were also many connectionss between communities, resulting in a lower modularity than was obsered in other networks. This makes intuitive sense in the context of Wikipedia: individual pages often contain many hyperlinks, some pointing to closely related topics and others to pages that are only loosely related. These numerous links naturally create connections between communities, reducing the overall modularity of the network. ## Possible future directions for further analysis. - Analyze larger subgraphs, or maybe even the entire netowrk. - Closer look at attributes: a.) Ideally identify which words correspond to which `features` indices in the dataset. b.) If possible, analyze what percentage of internet traffic comes from articles within this graph compared to outside sources. This may provide more insight into how traffic relates to the network structure. 
+Looking at our network, we can see that there is significant structure to how links form between Wikipedia articles. From the plots of the subgraphs, we can see there are both centrailized and more peripheral nodes. We did not find a strong relationship between Internet traffic and node centrality, or between length of the word list and centrality. In other words, node size appeared to be distributed independently of whether a node was located near the center or the edge of the plot. However, we suspect that a relationship may become clearer if we were able to analyze larger subgraphs. 
 
-# References: Rozemberczki, Benedek, Carl Allen, and Rik Sarkar. “Multi-Scale Attributed Node Embedding.” Journal of Complex Networks, vol. 9, no. 2, 2021. https://arxiv.org/abs/1909.13021. 
+While our graph had meaningful community structure, there were also many connectionss between communities, resulting in a lower modularity than was obsered in other networks. This makes intuitive sense in the context of Wikipedia: individual pages often contain many hyperlinks, some pointing to closely related topics and others to pages that are only loosely related. These numerous links naturally create connections between communities, reducing the overall modularity of the network. 
+
+## Possible future directions for further analysis. 
+
+- Analyze larger subgraphs, or maybe even the entire netowrk. 
+
+- Closer look at attributes: a.) Ideally identify which words correspond to which `features` indices in the dataset. b.) If possible, analyze what percentage of internet traffic comes from articles within this graph compared to outside sources. This may provide more insight into how traffic relates to the network structure. 
+
+# References: 
+Rozemberczki, Benedek, Carl Allen, and Rik Sarkar. “Multi-Scale Attributed Node Embedding.” Journal of Complex Networks, vol. 9, no. 2, 2021. https://arxiv.org/abs/1909.13021. 
 
 # Appendix
 
