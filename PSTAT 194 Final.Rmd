@@ -54,6 +54,7 @@ To enhance out visualizations, we chose to do a few different things
   - color in nodes based on louvain communities to make the groupings more obvious
   - remove the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read.
   - Make the lines between the nodes more see through so they take up less of the visual space.
+  - We found that changing the node sizes based on the node attributes did not lead to insights about our graph. 
 
 # Analyze Network Metrics:
 
@@ -63,7 +64,7 @@ To enhance out visualizations, we chose to do a few different things
 
 The degree of a node is the measure of amount of edges connecting to a node. For directed graphs, we can have in and out degree, but our graph is undirected, so we don't need to worry about that. The first thing we will do is to look at the [histogram of degree](#analyzing-network-metrics-degree) of the entire network. Here we can see that the distribution is heavily skewed to the right, with a giant peak at $[0,100]$. 
 
-When we look at the individual subgraphs, we can see a similar pattern. Each subgraph is skewed to the right. The most connected nodes have a bit less than 100 nodes, which is a little less than half the network. This tracks with the most connected nodes in the full network being connected to about half of the other nodes. One interesting pattern that was not expected is that for each of the subgraphs, there is a smaller peak at $[30,50]$. That is to say for each of the subgraphs degree distribution, there was a peak at zero, it decreased reaching a low at around $20$, then hit a second peak somewhere in $[30,50]$. We wonder if this is a result of a true pattern in the data, or if it is an artifact from the way we sampled. Recall we randomly sampled 40 nodes, then sampled neighbors of those nodes. Since nodes of a higher degree are connected to more nodes, they are more likely to appear when we sample neighbors of the nodes, so it is reasonable to infer this is a result of the way we sampled our data. 
+When we look at the individual subgraphs distribution of degree, we can see a similar pattern. Each subgraph's histogram is skewed to the right. The most connected nodes have a bit less than 100 nodes, which is a little less than half the network. This tracks with the most connected nodes in the full network being connected to about half of the other nodes. One interesting pattern that was not expected is that for each of the subgraphs, there is a smaller peak at $[30,50]$. That is to say for each of the subgraphs degree distribution, there was a peak at zero, it decreased reaching a low at around $20$, then hit a second peak somewhere in $[30,50]$. We wonder if this is a result of a true pattern in the data, or if it is an artifact from the way we sampled. Recall we randomly sampled 40 nodes, then sampled neighbors of those nodes. Since nodes of a higher degree are connected to more nodes, they are more likely to appear when we sample neighbors of the nodes, so it is reasonable to infer this is a result of the way we sampled our data. 
 
 ### Closeness
 
@@ -73,7 +74,7 @@ $$C_C(v_i) = \frac{n-1}{\sum_{i\not=j}d(v_i,v_j)}$$
 
 which is basically the inverse of the sum of the distances to all other nodes, normalized so if the distance for all nodes was 1, then it would have a closeness of 1. 
 
-Looking at the [plots of the closeness](#analyzing-network-metrics-closeness), we can see that while nodes towards the edges of our plot look much smaller than most of the nodes, the majority oof nodes are of similar size. This suggests that our network consists of a largely interconnected network, where most nodes are similar distances to most other nodes. 
+Looking at the [plots of the closeness](#analyzing-network-metrics-closeness), we can see that while nodes towards the edges of our plot look much smaller than most of the nodes, the majority of nodes are of similar size. This suggests that our network consists of a largely interconnected network, where most nodes are similar distances to most other nodes. This means there is not a few nodes that are most central. 
 
 ### Betweenness
 
