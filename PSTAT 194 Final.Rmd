@@ -174,11 +174,9 @@ Our graph had significant community structure, but there was a lot of connection
 
 ## Possible future directions for further analysis.
 
-- bigger subgraphs, or maybe even whole graph. 
-- closer look at attributes
-  - ideally know what the words are
-  - if possible, look at what percentage of internet traffic came from articles in this graph compared to from an outside source. That might be more insightful for this graph. 
-- 
+One direction for further analysis is to look at larger subgraphs or even the whole graph. Our method of sampling is biased towards nodes of higher degree, which could impact our centrality metrics or community structure. Another direction would be more detail focus on the graph attributes. We did not focus on them because there did not appear to be much of a pattern on our subgraphs. We didn't know what the words were, so we found it difficult to work with them. In addition, there were so many different words and each node had many different nodes, which mean including these words in an analysis would drastically increase the scope of the project. 
+Working on larger subgraphs might allow for more better knowledge of what these attributes actually do. One other thing we discussed is that it would be interesting to see the percent of traffic that comes from wikipedia traffic versus from an outside source, though this would likely require extra data collection. 
+
 
 # References:
 
