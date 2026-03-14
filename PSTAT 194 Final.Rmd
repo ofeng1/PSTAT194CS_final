@@ -1,187 +1,153 @@
----
-title: "PSTAT 194 Final Project"
-author: "Henry Bergeson, Yuxin Chen, Owen Feng, Ayden Kelleher"
-date: "2026-03-04"
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    code_folding: show
-    theme: flatly
-    highlight: tango
-  pdf_document:
-    toc: true
-  word_document:
-    toc: true
----
+--- 
+title: "PSTAT 194 Final Project" 
+author: "Ayden Kelleher" 
+date: "2026-03-04" 
+output: html_document: toc: true toc_float: true code_folding: show theme: flatly highlight: tango pdf_document: toc: true word_document: toc: true 
+--- 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+```{r setup, include=FALSE} 
+  knitr::opts_chunk$set(echo = TRUE) 
+``` 
 
-# Introduction:
+# Introduction: 
 
-For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of wikipedia articles, where the nodes are wikipedia articles on squirrels. The edges are mutual hyperlinks between articles, thus our graph is undirected. Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted, and that our graph is undirected. Our graph has 2 node attributes. The first one, called target, is the average monthly traffic (October 2017 - November 2018). The second one, called features in our data, is a list containing a collection of numbers. These numbers correspond to specific nouns in the articles, but we couldn't find which nouns go to what number. We have plotted histograms of the attributes [here](#snippet-2) to give a basic idea of what the distribution of these attributes are. 
+For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of Wikipedia articles, where the nodes represent wikipedia articles on squirrels and the edges represent mutual hyperlinks between those articles. Because edges only exist when two articles link to each other, the graph is undirected. 
 
-The objective our analysis is to see what the structure of wikipedia articles looks like, and to see if we can get an idea of what attribute influence how much traffic a node gets. 
+Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted and undirected, and that it contains two node attributes. The first attribute, `target`, is the average monthly traffic to each article from October 2017 - November 2018. The second attribute, `features`, is a list containing a collection of numbers corresponding to pecific nons ppeaing in the articles. However, we were unable to determine which nouns corresponded to which number. Histograms of these attributes are shown [here](#snippet-2) to provide a basic overview of their distributions. 
 
-# Methodology:
+The objective our analysis is to explore the structural properties of the squirrels Wikipedia article network and to investigate whether certain attributes influence the amount of traffic a node receives. 
 
-## Steps followed in data processing.
+# Methodology: 
 
-The first thing we did was we loaded a few `r` packages, including `igraph`, `tidygraph`, `jsonlite`, and `tidyr`, along with the data in [Code Snippet 1](#snippet-1). The graph data we had was an edge list, which we turned into a graph by turning it into a matrix, then turning this matrix into a graph using the `graph_from_edgelist` from the `igraph` package. We loaded the json data using the `fromJSON` function from the `jsonlite` package. Lastly, we loaded in the target data using the `read.csv` function from base `r`. We then added these as vertex attributes. 
+## Tools and Packages Used:
 
-# Generate Induced Subgraphs:
+We first loaded several `R` packages required for the analysis, including `igraph`, `tidygraph`, `jsonlite`, and `tidyr`, along with the dataset shown in [Code Snippet 1](#snippet-1). 
 
-## Create four induced subgraphs with 200 random nodes each from your dataset.
+## Steps followed in data processing. 
 
-To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, we ran into the issue that much of our graph had degree zero, with 79 out of 200 nodes being unconnected to any other node, in contrast to our entire graph g have no points that are of degree zero. Thus any random sample would lose some structure. 
+The graph data was provided as an edge list. We first converted the edge list into a matrix and then turned the matrix into a graph using the `graph_from_edgelist()` function from the `igraph` package. The feature data was stored as JSON files and was loaded using the `fromJSON()` function from the `jsonlite` package. Lastly, the target data, which was the average monthly traffic for each article, was loaded in using the `read.csv()` function from base `R`. These datasets were then added to the graph as vertex attributes. 
 
-To get around this, what we did instead was to draw a sample of 40 different nodes. Then we took a sample of 5 different neighbors of the nodes, or all of the neighbors if they had less than 5 total neighbors. Then we take 200 of those nodes, and put it in a subgraph. This subgraph is a biased subgraph, but it preserves some of the structure of the graph. We did this in each of the subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4), though we have better visualizations of our network. 
+# Generate Induced Subgraphs: 
 
-# Visualize the Networks:
+## Create four induced subgraphs with 200 random nodes each from your dataset. 
 
-## Use three different layouts from the igraph package to visualize each network.
+To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, this resulted in many "isolated" nodes: 79 out of 200 sampled nodes had degree zero,meaning they were not connected to any other nodes. This was unexpected, as the original graph $g$ contains no nodes with degree zero. As a result, purely random sampling caused much of the network’s structure to disappear. 
 
-For our visualizations, we chose 3 different layouts, the Fruchterman-Reingold layout, the Kamada-Kawai layout, and the layout nicely, where the plots can be found [here](#three-different-visualizations). 
+To resolve this issue, we instead drew a random sample of 40 nodes from the network. Then, for each of these nodes, we sampled up to five of their neighbors, or all of the neighbors if the node had fewer than five. From this resulting set of nodes, we selected 200 nodes to form our induced subgraph. Although this method introduces some bias, it preserves much of the network's connectivity and structure than purely random sampling. We used this approach to generate each of our four subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4). More detailed visualizations of these networks are provided later. 
+
+# Visualize the Networks: 
+
+## Use three different layouts from the igraph package to visualize each network. 
+
+For our visualizations, we chose 3 different layouts: Fruchterman-Reingold, Kamada-Kawai, and Nicely. The plots for each of these layouts can be found [here](#three-different-visualizations). 
 
 ## Experiment with node and edge attributes to enhance visualizations.
 
-To enhance out visualizations, we chose to do a few different things
+To enhance out visualizations and make them more interpretable, we chose to do a few different things: 
 
-  - adjust the node size by the following function of degree `3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))`
-  - adjust the node size by the attributes, specifically log internet traffic and log length of the wordlist. 
-  - color in nodes based on louvain communities to make the groupings more obvious
-  - remove the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read.
-  - Make the lines between the nodes more see through so they take up less of the visual space.
-  - We found that changing the node sizes based on the node attributes did not lead to insights about our graph. 
+- Adjusted the node size by the following function of degree `3 + 8 * (degree(simp_graph) / max(degree(simp_graph)))`.
 
-# Analyze Network Metrics:
+- Adjusted the node size by the attributes, specifically log internet traffic and log length of the wordlist. - Colored in nodes based on Louvain communities to make the groupings more obvious.
 
-## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network.
+- Removed the node labels. Our nodes are labelled 0 to 5200. This gives us no information about the corresponding articles, so not showing the degree label doesn't lose any information. Even if we had the article names, it would be very difficult to read. 
 
-### Degree
+- Made the lines between the nodes more see through so they take up less of the visual space. # Analyze Network Metrics: ## Explore various network, node, and edge metrics. Interpret these metrics in the context of your network. 
 
-The degree of a node is the measure of amount of edges connecting to a node. For directed graphs, we can have in and out degree, but our graph is undirected, so we don't need to worry about that. The first thing we will do is to look at the [histogram of degree](#analyzing-network-metrics-degree) of the entire network. Here we can see that the distribution is heavily skewed to the right, with a giant peak at $[0,100]$. 
+### Degree The degree of a node measures the number of edges connected to that node. 
 
-When we look at the individual subgraphs distribution of degree, we can see a similar pattern. Each subgraph's histogram is skewed to the right. The most connected nodes have a bit less than 100 nodes, which is a little less than half the network. This tracks with the most connected nodes in the full network being connected to about half of the other nodes. One interesting pattern that was not expected is that for each of the subgraphs, there is a smaller peak at $[30,50]$. That is to say for each of the subgraphs degree distribution, there was a peak at zero, it decreased reaching a low at around $20$, then hit a second peak somewhere in $[30,50]$. We wonder if this is a result of a true pattern in the data, or if it is an artifact from the way we sampled. Recall we randomly sampled 40 nodes, then sampled neighbors of those nodes. Since nodes of a higher degree are connected to more nodes, they are more likely to appear when we sample neighbors of the nodes, so it is reasonable to infer this is a result of the way we sampled our data. 
+In directed graphs, this can be separated into in-degree and out-degree, but since our graph is undirected, the degree simply counts the total number of edges connected to each node. We first examined the [histogram of node degrees](#analyzing-network-metrics-degree) for the entire network. From our plots, we can see that the distribution is heavily right-skewed, with a large concentration of nodes in the $[0,100]$. This seems to indicate that most Wikipedia articles in the network link to relatively few other articles, while a smaller number of nodes have much higher connectivity. This distributions suggests that we have a few highly connected articles that as hubs within our network. 
 
-### Closeness
+When we look at individual subgraphs, we observe a similar pattern. Each subgraph's degree distribution is right-skewed, meaning that most nodes have relatively low degree while a small number of nodes are highly connected. The most connected nodes in the subgraph (highlighted in yellow) have degrees just under 100, which is a slightly less than half of the nodes in each subgraph. This behavior is consistent with our full network, where the most connected nodes are also linked to roughly half of the other nodes. An interesting pattern that appears in each subgraph is bimodality, with a secondary peak in the degree range $[30, 50]$. 
 
-The closeness metric is a measure of how close every other node is to a specific node. The formula is 
+It is unclear whether this second peak is a result of a true pattern in the data or is an artifact from the bias introduced by our sampling method. Recall that we first randomly sampled 40 nodes, and then sampled neighbors of those nodes to construct the subgraph. Because nodes with higher degrees are connected to more nodes, they are more likely to appear when sampling neighbors of those nodes. As a result, this secondary peak may be partially explained by the way we sampled our data, which increases the likelihood that higher-degree nodes are included in the subgraphs. 
 
-$$C_C(v_i) = \frac{n-1}{\sum_{i\not=j}d(v_i,v_j)}$$
+### Closeness 
 
-which is basically the inverse of the sum of the distances to all other nodes, normalized so if the distance for all nodes was 1, then it would have a closeness of 1. 
+The closeness metric is a measure of how close every other node is to a specific node: 
 
-Looking at the [plots of the closeness](#analyzing-network-metrics-closeness), we can see that while nodes towards the edges of our plot look much smaller than most of the nodes, the majority of nodes are of similar size. This suggests that our network consists of a largely interconnected network, where most nodes are similar distances to most other nodes. This means there is not a few nodes that are most central. 
+$$C_C(v_i) = \frac{n-1}{\sum_{i\not=j}d(v_i,v_j)}$$ 
 
-### Betweenness
+It is essentially the inverse of the sum of the distances from node $v_i$ to all other nodes in the network. The value is normalized so if the distance for all nodes was 1, then it would have a closeness of 1.
 
-The betweenness centrality of a node $v_i$ is calculated by the following
+Looking at the [closeness centrality plots](#analyzing-network-metrics-closeness), we can see that although nodes near the edges of the graph appear smaller, most other nodes are similar in size. This indicates that most nodes have similar closeness values, suggesting they are at roughly similar distances from the rest of the network.
 
-$$C_B(v_i) = \sum_{i\not=j\not=k} \frac{\sigma_{jk}(v_i)}{\sigma_{jk}}$$
+### Betweenness 
 
-which basically means the number of shortest paths between $v_j$ and $v_k$ that include $v_i$ in it divided by the total number of shortest paths between $v_j$ and $v_k$.
+The betweenness centrality is a measure of how often a node lies on the shortest paths between other pairs of nodes: 
 
-Looking at the [plot of our betweenness centrality](#analyzing-network-metrics-betweenness), we can that the histogram is skewed right, suggesting that some nodes have a much larger betweenness centrality. Looking at the plot of the network using vertex size as log betweenness centrality, we see variation in the node sizes. Nodes on the edges are almost size zero, which makes sense. There are also many larger nodes near the edges and small nodes closer to the center suggesting that for some connected nodes, there are paths that don't use them that are quicker between many different nodes. 
+$$C_B(v_i) = \sum_{i\not=j\not=k} \frac{\sigma_{jk}(v_i)}{\sigma_{jk}}$$ 
+
+Where $\sigma_{jk}$ is the number of shortest paths between $v_j$ and $v_k$ and $\sigma_{jk}(v_i)$ is the number of shortest paths that pass throguh v_i. The resulting proportion describes how often the shortest path passes through node $v_i$. 
+
+Looking at the [betweenness centrality plots](#analyzing-network-metrics-betweenness), we can that the histogram is skewed right, indicating that most nodes have relatively low betweenness centrality while only a small number of nodes have high betweenness values. When examining the network visualization with vertex size as log betweenness centrality, we see variation in node sizes. Nodes near the edges of the network are often extremely small, while nodes near the center tend to be larger, which is expected since central nodes are more likely to lie on shortest paths between many pairs of nodes. However, we also observe some exceptions, like larger nodes near the edges or smaller nodes closer to the center. This suggests that certain nodes located near the center of the graph are not critical for connecting different parts of the network, since many shortest paths between nodes can bypass them. Larger nodes near the edges may represent a bridge between an adjacent cluster and the rest of the rest of the network, causing many shortest paths between those regions to pass through that node. 
 
 ### Eigen Metric
 
-The eigen centrality metric is a measure of centrality that, according to the documentation, states "eigenvector centrality scores correspond to the values of the principal eigenvector of the graph's adjacency matrix; these scores may, in turn, be interpreted as arising from a reciprocal process in which the centrality of each actor is proportional to the sum of the centralities of those actors to whom he or she is connected. In general, vertices with high eigenvector centralities are those which are connected to many other vertices which are, in turn, connected to many others (and so on)" from [here](https://r.igraph.org/reference/eigen_centrality.html). The thing to keep in mind is that the score gets bigger when a node is connected to more nodes, and these nodes are connected to more nodes, and so on. 
+The eigenvector centrality metric measures the importance of a node based on both how many nodes it's connected to and how important those nodes are. As described in the documentation, "eigenvector centrality scores correspond to the values of the principal eigenvector of the graph's adjacency matrix; these scores may, in turn, be interpreted as arising from a reciprocal process in which the centrality of each actor is proportional to the sum of the centralities of those actors to whom he or she is connected. In general, vertices with high eigenvector centralities are those which are connected to many other vertices which are, in turn, connected to many others (and so on)" ([igraph developers, 2024](https://r.igraph.org/reference/eigen_centrality.html)). In other words, a node receives a higher score, and is therefore considered more important, if it is connected to other nodes that are themselves well connected.
 
-Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we will start with the histograms. We can see that eigen centrality is distributed on $[0,1]$, where 1 is more connected. Looking at our subgraphs, we see the mode is at $[0,.1]$, with a second, much smaller, peak at about $[.4,.5]$. Comparing these to our degree distributions, we can see their shape is similar, with a main peak at 0, and a second smaller peak towards the middle of the data, which makes sense because both these node metrics are correlated. To show how this data looks when plotting the whole network, we cannot use the raw eigen metric because our nodes are too small, so we will use a transformation of the data. To give the reader an idea what this transformation does, we also plotted the histogram of the transformed data for the first subgraph.
+Looking at the plots of subgraphs [here](#analyzing-network-metrics-eigencentrality), we can see that eigen centrality is distributed on $[0,1]$, where 1 is more connected. Looking at our subgraphs, we see the mode is in the score range $[0,.1]$, with a second, much smaller, peak at about $[.4,.5]$. Comparing these distributions to our degree distributions, we observe a similar shape: a large concentration near zero and a smaller peak toward the middle of the range. This similarity is expected because the two metrics are related. Nodes with higher degree are more likely to be connected to other well-connected nodes, which increases their eigenvector centrality. 
 
-Looking at the actual plots, we can see there there are a bunch of central nodes that are grouped together, and then there are some less connected peripheral nodes, that are very small. This is most prominent on subgraph 3. This shows eigen centrality is a good measure of centrality.
+When visualizing the entire network, the raw eigen metric is difficult to see because most nodes appear extremely small. To make our plots more interpretable, we applied a transformation to the eigenvector centrality values and used them to scale our verticies. To give an idea of what this transformation does, we also plotted the histogram of the transformed data for the first subgraph. 
 
-# Community Detection:
+Looking at the network plots, we can see that many of the central nodes are grouped together, while several of the less connected peripheral nodes appear much smaller, a pattern that seems to be most notable in subgraph 3. This pattern reveals that highly central nodes tend to be connected to other highly connected nodes, while peripheral nodes have fewer or weaker connections. This pattern shows eigen centrality is a good measure of centrality. 
 
-## Run community detection algorithms
+# Community Detection: 
 
-We chose to run [three different community detection algorithms](#we-choose-fast-greedy-louvain-and-walktrap-top-three-methods-on-our-lecture-slide-and-covered-in-ica-to-perform-our-community-detection.), fast greedy, louvain, and walktrap. 
+## Run community detection algorithms 
 
-The way fast greedy works is by first declaring each node its own community, then it combines nodes greedily, that is to say maximizing the increase in modularity for each step, and stops when it can no longer increase the modularity. One thing to look out for is when working with larger networks, it can fail to find smaller communities .
+We chose to run [three different community detection algorithms](#we-choose-fast-greedy-louvain-and-walktrap-top-three-methods-on-our-lecture-slide-and-covered-in-ica-to-perform-our-community-detection.), Fast-Greedy, Louvain, and Walktrap. 
 
-The way the louvain community detection works is by declaring each node its own community, then moves nodes into the community that increases the modularity the most, and then collapses the communities into super nodes. 
-The way walktrap works is by starting a random walk in to run short random walks. The idea is that nodes in the same community will appear more on these short random walks. 
+The Fast-Greedy community detection algorithm works by first declaring each node as its own community and then iteratively merging communities in a greedy manner, choosing the merge that produces the largest increase in modularity at each step. One drawback of this method is that, in larger networks, it may fail to detect smaller communities. 
 
-The way the walktrap community detection works is by starting a random walk on a specific node, and seeing which nodes it gets to. We leverage the idea that random walks should generally stay in communities to decide communities. 
+The Louvain community detection algorithm works by first assigning each node to its own community and then iteratively moving nodes into neighboring communities if it increase the modularity of the network. After no further improvements can be made, the detected communities are collapsed into super-nodes, and the process repeats on this reduced network. 
 
-## Analyze and interpret the resulting communities
+The Walktrap community detection algorithm works by performing short random walks on the network. The idea is that nodes within the same community are more likely to be visited together during these walks, since random walks tend to remain within densely connected parts of the graph. 
 
-Comparing the results from the algorithms was interesting. Starting with the [modularity of our subgraphs](#and-then-we-compare-modularity), none of the graphs had very large modularity. Below is the results
+## Analyze and interpret the resulting communities 
 
-$$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walktrap} \\
- 1& 0.1911257 &0.2461304 &0.15813260 \\
-2& 0.3522581 &0.3608913 &0.29551518 \\
-3& 0.1545764 &0.2025717 &0.10072104 \\
-4& 0.2772735 &0.3141144 &0.08605815
-\end{array}$$
+Comparing the results from the algorithms was interesting. Starting with the [modularity of our subgraphs](#and-then-we-compare-modularity), we see that none of the graphs have particularly high modularity. The results are shown below: 
 
-In class, we learned that modularity over $.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 had any communities with modularity at least this high. However, subgraphs 1 and 3 still had modularity $.246$ and $.202$ respectively most modular community structrues, which isn't that much smaller than $.3$. This suggests that our network has a weak community structure. 
+$$\begin{array} &\text{subgraph #}&\text{fast greedy}&\text{louvain}&\text{walktrap} \\ 1& 0.1911257 &0.2461304 &0.15813260 \\ 2& 0.3522581 &0.3608913 &0.29551518 \\ 3& 0.1545764 &0.2025717 &0.10072104 \\ 4& 0.2772735 &0.3141144 &0.08605815 \end{array}$$
 
-### Monte Carlo Estimate of Modularity
+From lecture, we learned that modularity over $0.3$ suggests meaningful community structure. However, only subgraphs 2 and 4 hadimitation any communities with modularity at least this high. Subgraphs 1 and 3 had modularity of $0.246$ and $0.202$ for their most modular community structrues, which aren't much smaller than $0.3$. This suggests that our network has a weak community structure. 
 
-To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) estimate of the modularity of a random network with the same amount of nodes and edges. The way we did this was by generating a bunch of graphs using the amount of vertices and edges where the vertices had the same or about the same degree for each vertex, that the subgraphs had the connections between nodes randomly selected. Since the observed modularity is much larger than the modularity of the simulated graphs, we can confirm that our network has a meaningful community structure. 
+### Monte Carlo Estimate of Modularity 
+
+To test if our community structure was meaningful, we ran a [monte carlo](#monte-carlo-modularity) to estimate the modularity of random networks with the same number of nodes and edges. We generated many graphs with the same number of vertices and edges, where the vertices had approximately the same degree distribution as the original network but the connections between nodes were assigned randomly. Comparing the results, we found that the observed modularity was much larger than the modularity of the simulated graphs, suggesting that the community structure in our network is not due to random chance and is therefore meaningful.
 
 ### Analyzing communities
 
-Looking at the number of individual communities for each subgraph, we can see the following. 
+Looking at the number of individual communities for each subgraph, we can see the following: 
 
-$$\begin{array}
-& \text{subgraph #}& \text{fast greedy}& \text{louvain}& \text{walktrap} \\
-1 &6       &5       &31 \\
-2 &6       &6       &27 \\
-3 &4       &7       &27 \\
-4 &6       &5       &20
-\end{array}$$
+$$\begin{array} & \text{subgraph #}& \text{fast greedy}& \text{louvain}& \text{walktrap} \\ 1 &6 &5 &31 \\ 2 &6 &6 &27 \\ 3 &4 &7 &27 \\ 4 &6 &5 &20 \end{array}$$
 
-This gives us the biggest differences between the different community finding algorithms. We can see that both the fast greedy and the louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the walktrap has many isolated nodes that count as their own communities. This tells us if a node is relatively disconnected from the rest of the network, the walktrap will have a hard time placing it in a larger community. 
+This gives us the biggest differences between the different community finding algorithms. We can see that both the Fast-Greedy and the Louvain algorithms ended up with a small amount of communities, around 6 for each subgraph. For the Walktrap, each subgraph had many more communities, with 31, 27, 27, and 20 for each of the subgraphs respectively. Looking at [the plots](#and-we-visualize-with-community-coloring-short-eg) of the subgraphs with the community coloring, we can see that the Walktrap has many isolated nodes that count as their own communities. This tells us if a node is relatively disconnected from the rest of the network, the Walktrap will have a hard time placing it in a larger community. 
 
-
-
-
-
-
-# Adjacency Matrix:
+# Adjacency Matrix: 
 
 ## Examine the adjacency matrix of your network.
 
-We felt it was important to show at the unordered adjacency matrix to show what an uncorrelated adjacency matrix looks like. Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the louvain method, we can see very little pattern. The most of a pattern one could make out is that there a few horizontal lines, representing the nodes that are most connected, and a few blocks, representing multiple nodes connected to similar nodes. This lack of pattern is expected since our nodes have not been ordered yet. 
+We felt it was important to show at the unordered adjacency matrix to illustrate what an uncorrelated adjacency matrix looks like. Looking at the [unordered adjacency matrix](#unordered-adjacency-matrix) for subgraph 1 using the Louvain method, we observe very little visible structure. The only noticeable pattern are a few horizontal and vertical lines, which represent nodes with many connections, and a few faint blocks, indicating groups of nodes connected to similar sets of nodes. This lack of structure is expected since our nodes have not yet been reordered based on their communities. ## Reorder vertices to highlight patterns. 
 
-## Reorder vertices to highlight patterns.
+After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. There are five squares of varying density along the diagonal, which correspond to groups of nodes that are more densely connected with one another. This matches the five communities identified in Subgraph 1 by the Louvain method, confirming that these blocks represent the detected communities. Some observations we made were that There are five squares of varying density along the diagonal. This matches the five communities identifiedin subgraph 1 by the Louvain method, confirming that these blocks represent our detected communities. Some observations we made were that: 
 
-After [reordering our nodes](#ordered-adjacency-matrix), we can see a clearer pattern. There are 5 squares, filled in by varying amounts, on the diagnol. This matches the number of communities subgraph 1 has according to the louvain method, which confirms our observation of 5 squares. Some observations we made were that 
+- The first square is much more densely filled than the others, indicating that the nodes within this community are more strongly connected. 
 
-- The first square is much more filled in than any of the other squares. 
-- We can see many horizontal/vertical lines, especially the areas overlapping with the nodes of the first community. This shows that the first community has a higher average degree than the other communities. 
-- The other 4 communities have a much lower degree on average, and are much less connected among themselves, and have lots of empty space in their squares. This shows that our subgraph is quite sparse. 
+- We can see many horizontal/vertical lines, particularly in the region corresponding to nodes in the first community. These lines represent nodes with many connections, meaning that this community has a higher average degree than the others. 
 
-Our subgraph consisted on a single connected component. Thus we cannot reorder our network by connected components. 
+- The other four communities seem have a much lower degree on average, with noticeably more empty space within their blocks. This indicates that the graph is much less connected among themselves, highlighting that the subgraph overall is sparse. 
 
-One thing we wonder is our sampling strategy effected this result. Recall we selected 40 random nodes, then for each node, selected either 5 neighbors, or if they didn't have 5 neighbors, all of their neighbors. Then we selected 200 of those nodes. Thus, most of the nodes we chose were not quite randomly chosen, but conditioned on being neighbors with a random node, which biases the nodes we chose to those with a higher degree. Thus our network consists of nodes that are connected to more nodes than the typical node in our network. This could lead to less communities that are larger than expected in our subgraphs. 
+Because our subgraph consists of a single connected component, we cannot reorder our network by connected components. 
 
+One question we considered is whether our sampling strategy affected this result. Recall that we first selected 40 random nodes, then sampled up to five neighbors of each node (or all neighbors if the node had fewer than five). Then, from this pool, we selected 200 nodes to construct the subgraph. Because many of the sampled nodes were chosen as neighbors of other nodes, the selection process was not entirely random but instead biased toward higher-degree nodes, since nodes with more connections are more likely to appear as neighbors. As a result, the nodes in our subgraphs are likely to be more connected than a typical node in the full network. This bias may therefore lead to fewer but larger communities than expected in our subgraphs. 
 
 # Conclusion:
 
-## Summary of insights gained.
+## Summary of insights gained. 
 
-Looking at our network, we are able to say that there is significant structure to how links between wikipedia articles. 
+Looking at our network, we can see that there is significant structure to how links form between Wikipedia articles. From the plots of the subgraphs, we can see there are both centrailized and more peripheral nodes. We did not find a strong relationship between Internet traffic and node centrality, or between length of the word list and centrality. In other words, node size appeared to be distributed independently of whether a node was located near the center or the edge of the plot. However, we suspect that a relationship may become clearer if we were able to analyze larger subgraphs. While our graph had meaningful community structure, there were also many connectionss between communities, resulting in a lower modularity than was obsered in other networks. This makes intuitive sense in the context of Wikipedia: individual pages often contain many hyperlinks, some pointing to closely related topics and others to pages that are only loosely related. These numerous links naturally create connections between communities, reducing the overall modularity of the network. ## Possible future directions for further analysis. - Analyze larger subgraphs, or maybe even the entire netowrk. - Closer look at attributes: a.) Ideally identify which words correspond to which `features` indices in the dataset. b.) If possible, analyze what percentage of internet traffic comes from articles within this graph compared to outside sources. This may provide more insight into how traffic relates to the network structure. 
 
-Looking at the plots of the sub networks, we can see there are some more centralized nodes and more peripheral nodes. We did not find a strong relationship between internet traffic node centrality, or between length of the word list and centrality, that is to say node size looked distributed independent of whether the node was in the middle or edge of the plot, but suspect a relationship may be apparent if we had a larger subgraph size. 
-
-Our graph had significant community structure, but there was a lot of connections between communities, giving us a smaller modularity than many other networks. This makes intuitive sense because if you think of links from wikipedia, there are tons on any given page, and many are to articles very close to the subject on that page, and many are to articles barely related to the page. 
-
-## Possible future directions for further analysis.
-
-One direction for further analysis is to look at larger subgraphs or even the whole graph. Our method of sampling is biased towards nodes of higher degree, which could impact our centrality metrics or community structure. Another direction would be more detail focus on the graph attributes. We did not focus on them because there did not appear to be much of a pattern on our subgraphs. We didn't know what the words were, so we found it difficult to work with them. In addition, there were so many different words and each node had many different nodes, which mean including these words in an analysis would drastically increase the scope of the project. 
-Working on larger subgraphs might allow for more better knowledge of what these attributes actually do. One other thing we discussed is that it would be interesting to see the percent of traffic that comes from wikipedia traffic versus from an outside source, though this would likely require extra data collection. 
-
-
-# References:
-
-Rozemberczki, Benedek, Carl Allen, and Rik Sarkar. “Multi-Scale Attributed Node Embedding.” Journal of Complex Networks, vol. 9, no. 2, 2021. https://arxiv.org/abs/1909.13021. 
-
+# References: Rozemberczki, Benedek, Carl Allen, and Rik Sarkar. “Multi-Scale Attributed Node Embedding.” Journal of Complex Networks, vol. 9, no. 2, 2021. https://arxiv.org/abs/1909.13021. 
 
 # Appendix
 
@@ -941,5 +907,3 @@ plot(subg1,
      edge.color = "gray80",
      edge.width = 0.5)
 ```
-
-
