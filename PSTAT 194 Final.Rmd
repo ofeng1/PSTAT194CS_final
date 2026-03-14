@@ -105,6 +105,8 @@ The way fast greedy works is by first declaring each node its own community, the
 The way the louvain community detection works is by declaring each node its own community, then moves nodes into the community that increases the modularity the most, and then collapses the communities into super nodes. 
 The way walktrap works is by starting a random walk in to run short random walks. The idea is that nodes in the same community will appear more on these short random walks. 
 
+The way the walktrap community detection works is by starting a random walk on a specific node, and seeing which nodes it gets to. We leverage the idea that random walks should generally stay in communities to decide communities. 
+
 ## Analyze and interpret the resulting communities
 
 Comparing the results from the algorithms was interesting. Starting with the [modularity of our subgraphs](#and-then-we-compare-modularity), none of the graphs had very large modularity. Below is the results
