@@ -11,9 +11,9 @@ output: pdf_document
 
 # Introduction: 
 
-For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of Wikipedia articles, where the nodes represent wikipedia articles on squirrels and the edges represent hyperlinks between those articles. Because edges only exist when two articles link to each other, the graph is undirected. 
+For our network analysis, we chose for our network to be the Multi-scale Attributed Node Embedding Network Wikipedia page-page networks on Squirrels. [This network](https://snap.stanford.edu/data/wikipedia-article-networks.html) consists of a subset of Wikipedia articles, where the nodes represent wikipedia articles on squirrels and the edges represent mutual hyperlinks between those articles. Because edges only exist when two articles link to each other, the graph is undirected. 
 
-Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted and undirected, and that it contains two node attributes. The first attribute, `target`, is the average monthly traffic to each article from October 2017 - November 2018. The second attribute, `features`, is a list containing a collection of numbers corresponding to pecific nouns appearing in the articles. However, we were unable to determine which nouns corresponded to which number. Histograms of these attributes are shown [here](#snippet-2) to provide a basic overview of their distributions. 
+Using the `summary` function, we can see that our network has 5201 nodes, 217073 edges, that our graph is unweighted and undirected, and that it contains two node attributes. The first attribute, `target`, is the average monthly traffic to each article from October 2017 - November 2018. The second attribute, `features`, is a list containing a collection of numbers corresponding to specific nouns appearing in the articles. However, we were unable to determine which nouns corresponded to which number. Histograms of these attributes are shown [here](#snippet-2) to provide a basic overview of their distributions. 
 
 The objective our analysis is to explore the structural properties of the squirrels Wikipedia article network and to investigate whether certain attributes influence the amount of traffic a node receives. 
 
@@ -31,7 +31,9 @@ The graph data was provided as an edge list. We first converted the edge list in
 
 ## Create four induced subgraphs with 200 random nodes each from your dataset. 
 
-To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, this resulted in many "isolated" nodes: 79 out of 200 sampled nodes had degree zero,meaning they were not connected to any other nodes. This was unexpected, as the original graph $g$ contains no nodes with degree zero. As a result, purely random sampling caused much of the network’s structure to disappear. To resolve this issue, we instead drew a random sample of 40 nodes from the network. Then, for each of these nodes, we sampled up to five of their neighbors, or all of the neighbors if the node had fewer than five. From this resulting set of nodes, we selected 200 nodes to form our induced subgraph. Although this method introduces some bias, it preserves much of the network's connectivity and structure than purely random sampling. We used this approach to generate each of our four subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4). More detailed visualizations of these networks are provided later. 
+To create our induced subgraphs, we first attempted to [sample 200](#first-attempt-at-creating-a-subgraph) with 200 random nodes from our graph. However, this resulted in many "isolated" nodes: 79 out of 200 sampled nodes had degree zero,meaning they were not connected to any other nodes. This was unexpected, as the original graph $g$ contains no nodes with degree zero. As a result, purely random sampling caused much of the network’s structure to disappear. 
+
+To resolve this issue, we instead drew a random sample of 40 nodes from the network. Then, for each of these nodes, we sampled up to five of their neighbors, or all of the neighbors if the node had fewer than five. From this resulting set of nodes, we selected 200 nodes to form our induced subgraph. Although this method introduces some bias, it preserves much of the network's connectivity and structure than purely random sampling. We used this approach to generate each of our four subgraphs, which can be seen in [subgraph 1](#subgraph-1), [subgraph 2](#subgraph-2), [subgraph 3](#subgraph-3), and [subgraph 4](#subgraph-4). More detailed visualizations of these networks are provided later. 
 
 # Visualize the Networks: 
 
@@ -69,7 +71,7 @@ The closeness metric is a measure of how close every other node is to a specific
 
 $$C_C(v_i) = \frac{n-1}{\sum_{i\not=j}d(v_i,v_j)}$$ 
 
-It is essentially the inverse of the sum of the distances from node $v_i$ to all other nodes in the network. The value is normalized so if the distance for all nodes was 1, then it would have a closeness of 1.
+It is essentially the inverse of the sum of the distances from node $v_i$ to all other nodes in the network. The value is normalized so if the distance for all nodes was 1, then it would have a closeness of 1. This metric describes how centrally located an article is based on how quickly it can reach the rest of the network through chains of hyperlinks. An article with high closeness centrality is, on average, fewer link steps away from other articles, meaning it is more efficiently connected within the network.
 
 Looking at the [closeness centrality plots](#analyzing-network-metrics-closeness), we can see that although nodes near the edges of the graph appear smaller, most other nodes are similar in size. This indicates that most nodes have similar closeness values, suggesting they are at roughly similar distances from the rest of the network.
 
