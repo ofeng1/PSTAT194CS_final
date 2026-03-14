@@ -2,7 +2,7 @@
 title: "PSTAT 194 Final Project" 
 author: "Ayden Kelleher" 
 date: "2026-03-04" 
-output: html_document: toc: true toc_float: true code_folding: show theme: flatly highlight: tango pdf_document: toc: true word_document: toc: true 
+output: pdf_document
 --- 
 
 ```{r setup, include=FALSE} 
