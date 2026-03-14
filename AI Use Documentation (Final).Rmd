@@ -1,0 +1,74 @@
+---
+title: "AI Use Documentation"
+author: "Owen Feng, Ayden Kelleher, Yuxin Chen, Henry Bergeson"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 0. Consent
+
+This AI Use Documentation may be used in a future research study on AI-assisted communication in statistics education.
+
+Your decision does not affect your grade, bonus points, or standing in the course in any way.
+If you consent, only de-identified excerpts of your documentation may be analyzed or quoted. Owen Feng 7793805 and any identifying content will not be shared.
+
+### Do you consent to your documentation being used for research purposes?
+
+Yes
+
+### Are you 18 years or older?
+
+Yes
+
+## 1. Project Summary
+
+Our project analyzed the Squirrel Wikipedia article network by examining its overall structure and metrics. Through this analysis, we evaluated how connected the network was, identified influential articles, and assessed the strength of community structure within both the full network and our sampled subgraphs.
+
+## 2. Tool and Date Used
+
+Tool: ChatGPT 5.4
+
+Date: 03/09/2026
+
+## 3. Exact Prompt(s) Used
+
+You are an expert instructor in computational statistics reviewing a completed midterm project for a Monte Carlo methods course. Attached are my project instructions, rmd, and pdf files. Your role is strictly that of an editor, not a contributor. Help me identify places where explanations lack clarity, precision, or coherence and suggest improvements to organization and narrative flow. Lastly, suggest improvements to figure captions or slides to better reflect the existing content and reflect on whether or not my project fulfills all the requirements. Do not introduce new interpretations, assumptions, or references. Do not simplify in ways that reduce technical correctness. Do not rewrite content, only suggest changes and explain why. For each suggestion, briefly explain the reasoning behind it.
+
+## 4. Summary of AI Suggestions 
+
+The AI primarily suggested clarity and communication improvements rather than changes to our analysis. Most of its feedback focused on refining grammar, sentence structure, and phrasing so that the explanations within our report would be easier for readers to follow. In several places, it pointed out wording that was awkward, overly condensed, or imprecise, and suggested revisions that improved the overall quality of the writing and preserved the original meaning. In addition, the AI also helped identify places where our explanations of network concepts, metrics, and results could be communicated more clearly. Its suggestions aimed to make the report more polished and coherent by improving technical language and tightening explanations that were vague or repetitive. 
+
+### Example 1:
+The AI suggested that in our introductory paragraph describing our network, we use wordings like "mutual hyperlinks" rather than just "hyperlinks" to better clarify why our network was undirected. The AI also flagged a typo in the description of our “features” attribute (we wrote “pecific” instead of “specific”)
+
+### Example 2: 
+The AI suggested we clarify our explanation of the subgraph sampling procedure. In particular, it pointed out that our discussion of why random sampling was unsuccessful and our description of the revised sampling strategy were combined too closely, which made the section harder to follow. It recommended separating these ideas so that we first explain the limitation of the original approach and then describe how we adjusted our method in response. This change would not affect the substance of our methodology, but it would### make the progression of our reasoning clearer and easier for the reader to understand.
+
+### Example 3
+The AI suggested we expand some of our metric descriptions to make them more intuitive for readers. For instance, it noted that while we defined closeness centrality, we could strengthen the explanation by briefly describing what the metric represents in a network context.  (how quickly a node can reach the rest of the network or how fast information can travel from that node to others in the network)
+
+## 5. Critical Reflection
+
+We accepted several of the suggested changes that improved clarity and organization without altering the substance of our work. Specifically, we accepted the edits described above, including grammatical revisions in a few sections, improvements to the flow and structure of our explanation of the sampling procedure, and the addition of brief contextual explanations for certain network metrics. These changes helped make the report easier to read and follow, while keeping our original analysis, methodology, and interpretations fully intact. 
+
+We rejected or corrected suggestions that either risked altering the technical meaning of our explanations or implied modifications beyond the scope of editorial feedback. For example, we rejected one suggestion that proposed reframing the meaning of the bias introduced by our sampling methodology, since it risked changing our original interpretation rather than simply improving how it was communicated.
+
+
+## 6. Final Check
+
+For this project, the core intellectual work, selecting community detection methods, coding our sampling algorithm, and carrying out the analysis, was done independently using our own reasoning. AI was not used to generate solutions or replace our understanding of the material.
+
+Instead, we used AI only as a supplemental learning and editing tool: to clarify unfamiliar R syntax and to better understand how certain network metric concepts, such as eigan centrality measures and community structure, are most effectively visualized and interpreted in network plots.
+
+In short, our use of AI stayed firmly within a supportive role, and if someone we respected asked how we used it on this project, we would feel fully comfortable explaining it clearly and honestly.
+
+
+## Overall Assesment 
+
+Overall, the AI suggestions were helpful, particularly in refining wording and tightening the clarity of our explanations. What surprised us most was how useful it was for catching small inconsistencies or vague phrasing that we might have overlooked. Additionally, we learned that effective use of AI tools involves critical thinking, as not every suggestion will improve our work.
+
+
+
