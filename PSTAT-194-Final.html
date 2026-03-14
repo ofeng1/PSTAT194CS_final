@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Ayden Kelleher" />
+<meta name="author" content="Henry Bergeson, Yuxin Chen, Owen Feng, Ayden Kelleher" />
 
 <meta name="date" content="2026-03-04" />
 
@@ -1667,7 +1667,8 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">PSTAT 194 Final Project</h1>
-<h4 class="author">Ayden Kelleher</h4>
+<h4 class="author">Henry Bergeson, Yuxin Chen, Owen Feng, Ayden
+Kelleher</h4>
 <h4 class="date">2026-03-04</h4>
 
 </div>
@@ -1758,6 +1759,8 @@ degree label doesn’t lose any information. Even if we had the article
 names, it would be very difficult to read.</li>
 <li>Make the lines between the nodes more see through so they take up
 less of the visual space.</li>
+<li>We found that changing the node sizes based on the node attributes
+did not lead to insights about our graph.</li>
 </ul>
 </div>
 </div>
@@ -1774,22 +1777,22 @@ graph is undirected, so we don’t need to worry about that. The first
 thing we will do is to look at the <a href="#analyzing-network-metrics-degree">histogram of degree</a> of the
 entire network. Here we can see that the distribution is heavily skewed
 to the right, with a giant peak at <span class="math inline">\([0,100]\)</span>.</p>
-<p>When we look at the individual subgraphs, we can see a similar
-pattern. Each subgraph is skewed to the right. The most connected nodes
-have a bit less than 100 nodes, which is a little less than half the
-network. This tracks with the most connected nodes in the full network
-being connected to about half of the other nodes. One interesting
-pattern that was not expected is that for each of the subgraphs, there
-is a smaller peak at <span class="math inline">\([30,50]\)</span>. That
-is to say for each of the subgraphs degree distribution, there was a
-peak at zero, it decreased reaching a low at around <span class="math inline">\(20\)</span>, then hit a second peak somewhere in
-<span class="math inline">\([30,50]\)</span>. We wonder if this is a
-result of a true pattern in the data, or if it is an artifact from the
-way we sampled. Recall we randomly sampled 40 nodes, then sampled
-neighbors of those nodes. Since nodes of a higher degree are connected
-to more nodes, they are more likely to appear when we sample neighbors
-of the nodes, so it is reasonable to infer this is a result of the way
-we sampled our data.</p>
+<p>When we look at the individual subgraphs distribution of degree, we
+can see a similar pattern. Each subgraph’s histogram is skewed to the
+right. The most connected nodes have a bit less than 100 nodes, which is
+a little less than half the network. This tracks with the most connected
+nodes in the full network being connected to about half of the other
+nodes. One interesting pattern that was not expected is that for each of
+the subgraphs, there is a smaller peak at <span class="math inline">\([30,50]\)</span>. That is to say for each of the
+subgraphs degree distribution, there was a peak at zero, it decreased
+reaching a low at around <span class="math inline">\(20\)</span>, then
+hit a second peak somewhere in <span class="math inline">\([30,50]\)</span>. We wonder if this is a result of
+a true pattern in the data, or if it is an artifact from the way we
+sampled. Recall we randomly sampled 40 nodes, then sampled neighbors of
+those nodes. Since nodes of a higher degree are connected to more nodes,
+they are more likely to appear when we sample neighbors of the nodes, so
+it is reasonable to infer this is a result of the way we sampled our
+data.</p>
 </div>
 <div id="closeness" class="section level3">
 <h3>Closeness</h3>
@@ -1802,10 +1805,11 @@ other nodes, normalized so if the distance for all nodes was 1, then it
 would have a closeness of 1.</p>
 <p>Looking at the <a href="#analyzing-network-metrics-closeness">plots
 of the closeness</a>, we can see that while nodes towards the edges of
-our plot look much smaller than most of the nodes, the majority oof
-nodes are of similar size. This suggests that our network consists of a
+our plot look much smaller than most of the nodes, the majority of nodes
+are of similar size. This suggests that our network consists of a
 largely interconnected network, where most nodes are similar distances
-to most other nodes.</p>
+to most other nodes. This means there is not a few nodes that are most
+central.</p>
 </div>
 <div id="betweenness" class="section level3">
 <h3>Betweenness</h3>
@@ -1879,6 +1883,10 @@ increases the modularity the most, and then collapses the communities
 into super nodes. The way walktrap works is by starting a random walk in
 to run short random walks. The idea is that nodes in the same community
 will appear more on these short random walks.</p>
+<p>The way the walktrap community detection works is by starting a
+random walk on a specific node, and seeing which nodes it gets to. We
+leverage the idea that random walks should generally stay in communities
+to decide communities.</p>
 </div>
 <div id="analyze-and-interpret-the-resulting-communities" class="section level2">
 <h2>Analyze and interpret the resulting communities</h2>
@@ -2001,17 +2009,20 @@ articles barely related to the page.</p>
 </div>
 <div id="possible-future-directions-for-further-analysis." class="section level2">
 <h2>Possible future directions for further analysis.</h2>
-<ul>
-<li>bigger subgraphs, or maybe even whole graph.</li>
-<li>closer look at attributes
-<ul>
-<li>ideally know what the words are</li>
-<li>if possible, look at what percentage of internet traffic came from
-articles in this graph compared to from an outside source. That might be
-more insightful for this graph.</li>
-</ul></li>
-<li></li>
-</ul>
+<p>One direction for further analysis is to look at larger subgraphs or
+even the whole graph. Our method of sampling is biased towards nodes of
+higher degree, which could impact our centrality metrics or community
+structure. Another direction would be more detail focus on the graph
+attributes. We did not focus on them because there did not appear to be
+much of a pattern on our subgraphs. We didn’t know what the words were,
+so we found it difficult to work with them. In addition, there were so
+many different words and each node had many different nodes, which mean
+including these words in an analysis would drastically increase the
+scope of the project. Working on larger subgraphs might allow for more
+better knowledge of what these attributes actually do. One other thing
+we discussed is that it would be interesting to see the percent of
+traffic that comes from wikipedia traffic versus from an outside source,
+though this would likely require extra data collection.</p>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -2083,7 +2094,7 @@ to report</a></p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">is_directed</span>(g)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
-<pre><code>## IGRAPH 9d4bcf1 U--- 5201 217073 -- 
+<pre><code>## IGRAPH 40ddc23 U--- 5201 217073 -- 
 ## + attr: features (v/x), target (v/n)</code></pre>
 <p>A brief look at the network features. These are specific nouns in the
 articles.</p>
